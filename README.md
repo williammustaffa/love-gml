@@ -1,18 +1,24 @@
 ## Love App Boilerplate
 
 ### Structure
- * [assets](./assets)
-   * [images](./assets/images)
-   * [sounds](./assets/sounds)
- * [entities](./entities)
-   * [Actor.lua](./entities/Actor.lua)
-   * [Scene.lua](./entities/Scene.lua)
-   * [Sound.lua](./entities/Sound.lua)
-   * [Sprite.lua](./entities/Sprite.lua)
- * [libs](./libs)
-   * [classic.lua](./libs/classic.lua)
-   * [tick.lua](./libs/tick.lua)
- * [main.lua](./main.lua)
+* [assets](./assets)
+  * [images](./assets/images)
+  * [sounds](./assets/sounds)
+* [libs](./libs)
+  * [classic.lua](./libs/classic.lua)
+  * [tick.lua](./libs/tick.lua)
+* [main.lua](./main.lua)
+* [core](./core)
+  * [entities](./core/entities)
+    * [Actor.lua](./core/entities/Actor.lua)
+    * [Scene.lua](./core/entities/Scene.lua)
+    * [Sound.lua](./core/entities/Sound.lua)
+    * [Sprite.lua](./core/entities/Sprite.lua)
+    * [Background.lua](./core/entities/Background.lua)
+    * [Tileset.lua](./core/entities/Tileset.lua)
+    * [Viewport.lua](./core/entities/Viewport.lua)
+* [README.md](./README.md)
+
 
 ### Libs
 - **classic**: https://github.com/rxi/classic
