@@ -1,10 +1,13 @@
 -- File: Actor.lua
--- TODO: documentate class
 
 Actor = Object:extend()
 
 function Actor:new()
-  -- Actor creation 
+  -- Actor creation
+  self.x = 20
+  self.y = 20
+  self.width = 100
+  self.height = 100
 end
 
 function Actor:update(dt)
