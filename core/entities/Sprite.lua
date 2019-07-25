@@ -1,6 +1,6 @@
 -- File: Sprite.lua
 
-Sprite = Object:extend()
+local Sprite = Object:extend()
 
 function Sprite:new()
   -- Sprite creation

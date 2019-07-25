@@ -1,6 +1,6 @@
 -- File: Actor.lua
 
-Actor = Object:extend()
+local Actor = Object:extend()
 
 function Actor:new()
   -- Actor creation

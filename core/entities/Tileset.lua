@@ -1,6 +1,6 @@
 -- File: Tileset.lua
 
-Tileset = Object:extend()
+local Tileset = Object:extend()
 
 function Tileset:new()
   -- Tileset creation

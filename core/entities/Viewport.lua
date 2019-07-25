@@ -1,6 +1,6 @@
 -- File: Viewport.lua
 
-Viewport = Object:extend()
+local Viewport = Object:extend()
 
 function Viewport:new()
   -- Viewport creation

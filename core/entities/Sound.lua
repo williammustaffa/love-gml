@@ -1,6 +1,6 @@
 -- File: Sound.lua
 
-Sound = Object:extend()
+local Sound = Object:extend()
 
 function Sound:new()
   -- Sound creation

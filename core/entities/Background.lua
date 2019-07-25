@@ -1,6 +1,6 @@
 -- File: Background.lua
 
-Background = Object:extend()
+local Background = Object:extend()
 
 function Background:new()
   -- Background creation
