@@ -1,10 +1,10 @@
 -- File: Actor.lua
 local Actor = class('entity.Actor')
 
-function Actor:initialize()
+function Actor:initialize(options)
   -- Actor creation
-  self.x = 20
-  self.y = 20
+  self.x = options and options.x or 0
+  self.y = options and options.y or 0
   self.width = 100
   self.height = 100
 end

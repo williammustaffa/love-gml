@@ -13,17 +13,9 @@ function Stage:initialize()
   Scene.initialize(self)
 
   self:placeObject(Player, 0, 0)
-  self:placeObject(Player, 2, 2)
-  self:placeObject(Player, 3, 3)
-  self:placeObject(Player, 4, 0)
-end
-
-function Stage:update(dt)
-  Scene.update(self)
-end
-
-function Stage:draw()
-  Scene.draw(self)
+  self:placeObject(Player, 0, 25)
+  self:placeObject(Player, 0, 50)
+  self:placeObject(Player, 0, 75)
 end
 
 return Stage

@@ -4,8 +4,9 @@ local Actor = require 'core.entities.Actor'
 
 local Player = Actor:subclass('Player')
 
-function Player:initialize()
-  Actor.initialize(self)
+function Player:initialize(options)
+  Actor.initialize(self, options)
+  print(options)
   -- Player creation
 end
 
@@ -17,8 +18,7 @@ end
 
 function Player:draw(dt)
   Actor.draw(self)
-  -- Player update
-  -- Testing actor drawing
+  -- Player draw
   love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
 end
 

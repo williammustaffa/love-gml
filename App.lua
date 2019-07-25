@@ -8,26 +8,22 @@ local Scene = require 'core.entities.Scene'
 
 local App = class('App')
 
--- new:
+-- App:initialize:
 -- Constructor method
 function App:initialize()
   self.sceneIndex = 1
   self.scenes = {}
   self.scene = false
 
-  -- Scenes
   self:addScene(require('scenes.DemoStage'))
-  -- Select scene by the class name
   self:setScene('DemoStage')
 end
 
--- addScene:
--- Add scenes as eligible scene
 function App:addScene(scene)
   self.scenes[scene.name] = scene:new()
 end
 
--- setScene:
+-- App:setScene:
 -- Changes current scene based on its name
 function App:setScene(sceneName)
   local nextScene = self.scenes[sceneName]
@@ -35,13 +31,14 @@ function App:setScene(sceneName)
   if nextScene then
     print('Successfuly set scene up: ' .. sceneName)
     self.scene = nextScene
+    self.scene:init()
   else
-    print('Error setting up scene: ' .. sceneName)
+    print('Scene <' .. sceneName .. '> not found.')
     self.scene = false
   end
 end
 
--- update
+-- App:update:
 -- Call current scene update method
 function App:update(dt)
   if self.scene and self.scene:isInstanceOf(Scene) then
@@ -49,7 +46,7 @@ function App:update(dt)
   end
 end
 
--- draw
+-- App:draw:
 -- Call current scene draw method
 function App:draw()
   if self.scene and self.scene:isInstanceOf(Scene) then
