@@ -1,8 +1,7 @@
 -- File: Background.lua
+local Background = class('entity.Background')
 
-local Background = Object:extend()
-
-function Background:new()
+function Background:initialize()
   -- Background creation
 end
 

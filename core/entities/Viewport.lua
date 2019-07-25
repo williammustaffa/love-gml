@@ -1,8 +1,7 @@
 -- File: Viewport.lua
+local Viewport = class('entity.Viewport')
 
-local Viewport = Object:extend()
-
-function Viewport:new()
+function Viewport:initialize()
   -- Viewport creation
 end
 

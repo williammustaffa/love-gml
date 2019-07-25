@@ -21,7 +21,7 @@
 
 
 ### Libs
-- **classic**: https://github.com/rxi/classic
+- **middleclass**: https://github.com/kikito/middleclass
 - **tick**: https://github.com/rxi/tick
 
 ## Usage

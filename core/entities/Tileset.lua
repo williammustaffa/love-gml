@@ -1,8 +1,7 @@
 -- File: Tileset.lua
+local Tileset = class('entity.Tileset')
 
-local Tileset = Object:extend()
-
-function Tileset:new()
+function Tileset:initialize()
   -- Tileset creation
 end
 

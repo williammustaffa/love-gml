@@ -1,8 +1,7 @@
 -- File: Scene.lua
+local Scene = class('entity.Scene')
 
-local Scene = Object:extend()
-
-function Scene:new()
+function Scene:initialize()
   -- Scene creation
   self.objects = {}
   self.instances = {}
@@ -11,7 +10,7 @@ end
 function Scene:placeObject(class, x, y)
   local objectData = {}
 
-  objectData.instantiate = class
+  objectData.instantiate = function () return class:new() end
   objectData.x = x
   objectData.y = y
 
@@ -35,7 +34,7 @@ end
 
 function Scene:update(dt)
   -- Scene update
-  print('update')
+  print('Scene update')
   for index,instance in ipairs(self.instances) do
     instance:update(dt)
   end

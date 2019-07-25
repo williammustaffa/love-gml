@@ -1,8 +1,7 @@
 -- File: Sound.lua
+local Sound = class('entity.Sound')
 
-local Sound = Object:extend()
-
-function Sound:new()
+function Sound:initialize()
   -- Sound creation
 end
 

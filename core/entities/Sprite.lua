@@ -1,8 +1,7 @@
 -- File: Sprite.lua
+local Sprite = class('entity.Sprite')
 
-local Sprite = Object:extend()
-
-function Sprite:new()
+function Sprite:initialize()
   -- Sprite creation
 end
 

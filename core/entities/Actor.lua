@@ -1,8 +1,7 @@
 -- File: Actor.lua
+local Actor = class('entity.Actor')
 
-local Actor = Object:extend()
-
-function Actor:new()
+function Actor:initialize()
   -- Actor creation
   self.x = 20
   self.y = 20
