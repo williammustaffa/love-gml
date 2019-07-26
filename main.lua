@@ -1,5 +1,5 @@
 -- Core app
-App = require('App')
+App = require('src.App')
 
 function love.load()
   app = App:new()

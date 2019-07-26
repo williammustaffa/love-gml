@@ -15,7 +15,7 @@ function App:initialize()
   self.scenes = {}
   self.scene = false
 
-  self:addScene(require('scenes.DemoStage'))
+  self:addScene(require('src.scenes.DemoStage'))
   self:setScene('DemoStage')
 end
 
