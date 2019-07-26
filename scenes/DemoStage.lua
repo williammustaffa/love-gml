@@ -13,9 +13,6 @@ function Stage:initialize()
   Scene.initialize(self)
 
   self:placeObject(Player, 0, 0)
-  self:placeObject(Player, 0, 25)
-  self:placeObject(Player, 0, 50)
-  self:placeObject(Player, 0, 75)
 end
 
 return Stage
