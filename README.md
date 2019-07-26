@@ -12,6 +12,7 @@ Lua
 * [libs/](./libs)
   * [middleclass.lua](./libs/middleclass.lua)
   * [tick.lua](./libs/tick.lua)
+  * [debugger.lua](./libs/debugger.lua)
 * [core/](./core)
   * [entities/](./core/entities)
     * [Actor.lua](./core/entities/Actor.lua)
@@ -32,8 +33,9 @@ Lua
 * [README.md](./README.md)
 
 ### Libs
-- **middleclass**: https://github.com/kikito/middleclass
-- **tick**: https://github.com/rxi/tick
+- **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support
+- **[tick](https://github.com/rxi/tick)**: Lua module for delaying function calls
+- **[debugger](https://github.com/slembcke/debugger.lua)**: A simple, embedabble CLI debugger for Lua.
 
 ## Usage
 TODO
