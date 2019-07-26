@@ -2,7 +2,6 @@
 
 ### Running the project
 This project uses Löve2d along with lua language. To prepare your development environment you`ll need to install both.
-Lua
 
 **Löve2D:** Go to [Löve2d website](https://love2d.org) and follow the instructions for your OS
 
