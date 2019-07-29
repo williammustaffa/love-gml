@@ -20,6 +20,7 @@ function App:initialize()
 end
 
 function App:addScene(scene)
+  print('[App:addScene] Added new scene: ', Scene.name)
   self.scenes[scene.name] = scene:new()
 end
 
@@ -29,11 +30,11 @@ function App:setScene(sceneName)
   local nextScene = self.scenes[sceneName]
 
   if nextScene then
-    print('Successfuly set scene up: ' .. sceneName)
+    print('[App:setScene] Running scene: ', sceneName)
     self.scene = nextScene
     self.scene:init()
   else
-    print('Scene <' .. sceneName .. '> not found.')
+    print('[App:setScene] Failed running scene: ', sceneName)
     self.scene = false
   end
 end

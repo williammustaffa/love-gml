@@ -35,6 +35,7 @@ This project uses Löve2d along with lua language. To prepare your development e
 - **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support
 - **[tick](https://github.com/rxi/tick)**: Lua module for delaying function calls
 - **[debugger](https://github.com/slembcke/debugger.lua)**: A simple, embedabble CLI debugger for Lua.
+- **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
 
 ## Usage
 TODO
