@@ -101,14 +101,11 @@ end
 -- Scene:placeObject
 -- Place objects in room for giving coordinates
 function Scene:placeObject(class, x, y)
-  local objectData = {}
-  local options = { x = x, y = y }
-
-  objectData.instantiate = function ()
-    return class:new(options)
+  local data = {}
+  data.createInstance = function ()
+    return class:new({ x = x, y = y, scene = self })
   end
-
-  table.insert(self.objects, objectData)
+  table.insert(self.objects, data)
 end
 
 -- Scene:createInstances
@@ -116,7 +113,7 @@ end
 function Scene:createInstances()
   -- Instantiate actors
   for index,object in ipairs(self.objects) do
-    table.insert(self.instances, object.instantiate())
+    table.insert(self.instances, object.createInstance())
   end
 end
 

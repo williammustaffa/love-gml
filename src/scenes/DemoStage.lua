@@ -5,6 +5,7 @@
 -- Important to set the subclass name as it will be used in the scene navigation
 local Scene = require 'core.entities.Scene'
 local Player = require 'src.objects.Player'
+local Block = require 'src.objects.Block'
 
 local Stage = Scene:subclass('DemoStage')
 
@@ -13,6 +14,11 @@ function Stage:initialize()
 
   self.canFlash = true
   self:placeObject(Player, 0, 0)
+
+  -- Place floor
+  for x=0,love.graphics.getWidth() / 32 do
+    self:placeObject(Block, x * 32, love.graphics.getHeight() - 32) 
+  end
 end
 
 function Stage:update(dt)

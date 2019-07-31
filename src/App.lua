@@ -2,6 +2,8 @@
 Tick = require 'libs.tick'
 class = require 'libs.middleclass'
 debugger = require 'libs.debugger'
+-- Include helpers
+require 'libs.helpers'
 
 -- Global entities
 local Scene = require 'core.entities.Scene'

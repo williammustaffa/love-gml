@@ -17,6 +17,39 @@ function Actor:initialize(options)
   self.direction = options and options.direction or 0
   self.width = options and options.width or 0
   self.height = options and options.height or 0
+  self.scene = options and options.scene or false
+end
+
+function Actor:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
+  return x1 < x2 + w2 and
+         x2 < x1 + w1 and
+         y1 < y2 + h2 and
+         y2 < y1 + h1
+end
+
+function Actor:placeFree(x, y)
+  local hasPlaceFree = true
+
+  if self.scene then
+    local instances = self.scene.instances
+
+    -- Check for collission
+    for index,instance in ipairs(instances) do
+      if instance.solid then
+        if
+          x < instance.x + instance.width and
+          instance.x < x + self.width and
+          y < instance.y + instance.height and
+          instance.y < y + self.height
+        then
+          hasPlaceFree = false
+          break
+        end
+      end
+    end
+  end
+
+  return hasPlaceFree
 end
 
 function Actor:update(dt)
