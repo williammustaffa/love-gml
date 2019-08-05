@@ -1,5 +1,5 @@
 -- File: Scene.lua
-local Camera = require('libs.Camera')
+local Camera = require('core.libs.Camera')
 
 -- Create class
 local Scene = class('entity.Scene')

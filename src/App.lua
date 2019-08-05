@@ -1,9 +1,10 @@
 -- Global libraries
-Tick = require 'libs.tick'
-class = require 'libs.middleclass'
-debugger = require 'libs.debugger'
+Tick = require 'core.libs.tick'
+class = require 'core.libs.middleclass'
+debugger = require 'core.libs.debugger'
+
 -- Include helpers
-require 'libs.helpers'
+require 'core.helpers.rgba'
 
 -- Global entities
 local Scene = require 'core.entities.Scene'
@@ -13,7 +14,6 @@ local App = class('App')
 -- App:initialize:
 -- Constructor method
 function App:initialize()
-  self.sceneIndex = 1
   self.scenes = {}
   self.scene = false
 
@@ -30,6 +30,10 @@ end
 -- Changes current scene based on its name
 function App:setScene(sceneName)
   local nextScene = self.scenes[sceneName]
+
+  if self.scene then
+    self.scene:kill()
+  end
 
   if nextScene then
     print('[App:setScene] Running scene: ', sceneName)

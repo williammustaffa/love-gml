@@ -6,8 +6,6 @@ local Player = Actor:subclass('Player')
 function Player:initialize(options)
   Actor.initialize(self, options)
   -- Player creation
-  self.x = love.graphics.getWidth() / 2 - 16
-  self.y = love.graphics.getHeight() / 2 - 16
   self.height = 32
   self.width = 32
   self.speed = 200
