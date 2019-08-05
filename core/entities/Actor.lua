@@ -36,12 +36,7 @@ function Actor:placeFree(x, y)
     -- Check for collission
     for index,instance in ipairs(instances) do
       if instance.solid then
-        if
-          x < instance.x + instance.width and
-          instance.x < x + self.width and
-          y < instance.y + instance.height and
-          instance.y < y + self.height
-        then
+        if self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height) then
           hasPlaceFree = false
           break
         end
@@ -54,8 +49,10 @@ end
 
 function Actor:update(dt)
   -- Actor update
-  self.x = self.x + self.hspeed * dt
-  self.y = self.y + self.vspeed * dt
+
+  -- Apply hspeed and vspeed
+  self.x = self.x + self.hspeed
+  self.y = self.y + self.vspeed
 end
 
 function Actor:draw()

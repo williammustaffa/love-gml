@@ -4,7 +4,7 @@ class = require 'core.libs.middleclass'
 debugger = require 'core.libs.debugger'
 
 -- Include helpers
-require 'core.helpers.rgba'
+require 'core.modules.graphics.rgba'
 
 -- Global entities
 local Scene = require 'core.entities.Scene'

@@ -14,6 +14,19 @@ end
 function Player:update(dt)
   Actor.update(self, dt)
   -- Player update
+
+  -- Gravity
+  if self:placeFree(self.x, self.y + self.vspeed + 2 * dt) then
+    self.vspeed = self.vspeed + 5 * dt
+  else
+    self.vspeed = 0
+  end
+
+  -- Normalize ground landing
+  while not self:placeFree(self.x, self.y) do
+    self.y = self.y - 0.5
+  end
+
   if love.keyboard.isDown('right') and self:placeFree(self.x + self.speed * dt, self.y) then
     self.x = self.x + self.speed * dt
   end
@@ -23,11 +36,7 @@ function Player:update(dt)
   end
 
   if love.keyboard.isDown('up') and self:placeFree(self.x, self.y - self.speed * dt) then
-    self.y = self.y - self.speed * dt
-  end
-
-  if love.keyboard.isDown('down') and self:placeFree(self.x, self.y + self.speed * dt) then
-    self.y = self.y + self.speed * dt
+    self.vspeed = -150 * dt
   end
 end
 
