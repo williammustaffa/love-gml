@@ -35,7 +35,7 @@ function Actor:placeFree(x, y)
 
     -- Check for collission
     for index,instance in ipairs(instances) do
-      if instance.solid then
+      if instance.solid and instance.id ~= self.id then
         if self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height) then
           hasPlaceFree = false
           break
@@ -47,10 +47,27 @@ function Actor:placeFree(x, y)
   return hasPlaceFree
 end
 
-function Actor:applyCollision()
+function Actor:applyCollision(dt)
   -- Normalize ground landing
-  while not self:placeFree(self.x, self.y) do
-    self.y = self.y - 0.5
+  local nextX = self.x + self.hspeed * dt
+  local nextY = self.y + self.vspeed * dt
+
+  if not self:placeFree(nextX, self.y) then
+    while not self:placeFree(nextX, self.y) do
+      nextX = math.round(nextX) - 1
+    end
+
+    self.hspeed = 0
+    self.x = nextX
+  end
+
+  if not self:placeFree(self.x, nextY) then
+    while not self:placeFree(self.x, nextY) do
+      nextY = math.round(nextY) - 1
+    end
+
+    self.vspeed = 0
+    self.y = nextY
   end
 end
 

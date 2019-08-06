@@ -6,6 +6,7 @@ debugger = require 'core.libs.debugger'
 -- Include helpers
 require 'core.modules.graphics.utils'
 require 'core.modules.table.utils'
+require 'core.modules.math.utils'
 require 'core.modules.string.utils'
 
 -- Global entities

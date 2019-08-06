@@ -1,4 +1,4 @@
-function filter(t, f)
+function table.filter(t, f)
   local newTable = {}
 
   for index, value in ipairs(t) do

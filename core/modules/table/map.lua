@@ -1,4 +1,4 @@
-function map(t, f)
+function table.map(t, f)
   local newTable = {}
 
   for index, value in ipairs(t) do

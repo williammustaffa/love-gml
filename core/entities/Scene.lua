@@ -161,15 +161,18 @@ end
 -- Create single instance from object item from objects array
 function Scene:createInstance(class, x, y)
   local instance = class:new({ x = x, y = y, scene = self })
+  local id = #self.instances + 1
 
-  table.insert(self.instances, instance)
+  instance.id = id
+
+  self.instances[id] = instance
 end
 
 -- Scene:createInstances
 -- Loop though all objects and instantiate them
 function Scene:createInstances()
   -- Instantiate actors
-  map(self.objects, function(object) self:createInstance(object.class, object.x, object.y) end)
+  table.map(self.objects, function(object) self:createInstance(object.class, object.x, object.y) end)
 
   print('[Scene:createIntances] Creating instances for: ' .. Scene.name)
 end
