@@ -4,7 +4,9 @@ class = require 'core.libs.middleclass'
 debugger = require 'core.libs.debugger'
 
 -- Include helpers
-require 'core.modules.graphics.rgba'
+require 'core.modules.graphics.utils'
+require 'core.modules.table.utils'
+require 'core.modules.string.utils'
 
 -- Global entities
 local Scene = require 'core.entities.Scene'
@@ -22,7 +24,7 @@ function App:initialize()
 end
 
 function App:addScene(scene)
-  print('[App:addScene] Added new scene: ', Scene.name)
+  print('[App:addScene] Added new scene: ' .. Scene.name)
   self.scenes[scene.name] = scene:new()
 end
 
@@ -36,11 +38,11 @@ function App:setScene(sceneName)
   end
 
   if nextScene then
-    print('[App:setScene] Running scene: ', sceneName)
+    print('[App:setScene] Running scene: ' .. sceneName)
     self.scene = nextScene
     self.scene:init()
   else
-    print('[App:setScene] Failed running scene: ', sceneName)
+    print('[App:setScene] Failed running scene: ' .. sceneName)
     self.scene = false
   end
 end

@@ -48,11 +48,6 @@ function Actor:placeFree(x, y)
 end
 
 function Actor:applyCollision()
-  -- Gravity handler when colliding
-  if not self:placeFree(self.x, self.y + 1) then
-    self.vspeed = 0
-  end
-
   -- Normalize ground landing
   while not self:placeFree(self.x, self.y) do
     self.y = self.y - 0.5
@@ -67,8 +62,8 @@ function Actor:update(dt)
   self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180) * dt;
 
   -- Apply hspeed and vspeed
-  self.x = self.x + self.hspeed
-  self.y = self.y + self.vspeed
+  self.x = self.x + self.hspeed * dt
+  self.y = self.y + self.vspeed * dt
 
   -- Apply speed and direction
   self.y = self.y + self.speed * math.sin(self.direction * math.pi / 180);

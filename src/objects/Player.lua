@@ -11,8 +11,9 @@ function Player:initialize(options)
   self.height = 32
   self.width = 32
   self.speed = 0
-  self.gravity = 10
-  self.gravityDirection = 270
+
+  -- Set this object as viewport target
+  self.scene:setViewportTarget(self)
 end
 
 function Player:update(dt)
@@ -20,16 +21,42 @@ function Player:update(dt)
   -- Player update
   self:applyCollision()
 
-  if love.keyboard.isDown('right') and self:placeFree(self.x + self.speed * dt, self.y) then
-    self.x = self.x + 200 * dt
+  -- Gravity
+  if self:placeFree(self.x, self.y + 1) then
+    self.gravity = 100
+  else
+    self.gravity = 0
+    self.vspeed = 0
   end
 
-  if love.keyboard.isDown('left') and self:placeFree(self.x - self.speed * dt, self.y) then
-    self.x = self.x - 200 * dt
+  if love.keyboard.isDown('right') then
+    if self:placeFree(self.x + 200 * dt, self.y) then
+      self.hspeed = 200
+    else
+      self.hspeed = 0
+      while self:placeFree(self.x + 0.1, self.y) do
+        self.x = self.x + 0.1
+      end
+    end
+  end
+
+  if love.keyboard.isDown('left') then
+    if self:placeFree(self.x - 200 * dt, self.y) then
+      self.hspeed = -200
+    else
+      self.hspeed = 0
+      while self:placeFree(self.x - 0.1, self.y) do
+        self.x = self.x - 0.1
+      end
+    end
+  end
+
+  if not love.keyboard.isDown('right') and not love.keyboard.isDown('left') then
+    self.hspeed = 0
   end
 
   if love.keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
-    self.vspeed = -400 * dt
+    self.vspeed = -400
   end
 end
 

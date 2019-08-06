@@ -12,12 +12,24 @@ local Stage = Scene:subclass('DemoStage')
 function Stage:initialize()
   Scene.initialize(self)
 
+  self.width = 960
   self.canFlash = true
   self:placeObject(Player, 0, 0)
 
   -- Place floor
-  for x=0,love.graphics.getWidth() / 32 do
+  for x=0, love.graphics.getWidth() * 2 / 32 do
     self:placeObject(Block, x * 32, love.graphics.getHeight() - 32) 
+  end
+
+  for x=0, love.graphics.getWidth() * 2 / 32 do
+    if math.random() > 0.5 then
+      self:placeObject(Block, x * 32, love.graphics.getHeight() - 64) 
+    end
+  end
+  for x=0, love.graphics.getWidth() * 2 / 32 do
+    if math.random() > 0.5 then
+      self:placeObject(Block, x * 32, love.graphics.getHeight() - 96) 
+    end
   end
 end
 
@@ -26,7 +38,7 @@ function Stage:update(dt)
   -- we can place global configuration here
   -- such as dynamic viewports, backgrounds, tilesets
   if self.canFlash and love.keyboard.isDown('return') then
-    self:getViewport():flash(0.05, {0, 0, 0, 1})
+    self:getViewport():flash(0.05, { 0, 0, 0, 1 })
     self.canFlash = false
   end
 end

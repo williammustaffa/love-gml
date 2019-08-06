@@ -12,6 +12,8 @@ function Scene:initialize()
   self.instances = {}
   self.viewports = {}
   self.viewport = false
+  self.width = 640
+  self.height = 480
 
   self:addViewport('default', {})
 end
@@ -29,6 +31,14 @@ end
 function Scene:kill()
   self:resetViewport()
   self:destroyInstances()
+end
+
+function Scene:getHeight()
+  return math.max(self.height, love.graphics.getHeight())
+end
+
+function Scene:getWidth()
+  return math.max(self.width, love.graphics.getWidth())
 end
 
 -- Scene:addViewport
@@ -54,9 +64,10 @@ function Scene:setViewport(name)
 
   if viewport then
     self.viewport = viewport
+    print('[Scene:addViewport] Viewport set: ' .. name)
   else
-    print('[Scene:addViewport] Viewport not found: ', name)
     self:resetViewport()
+    print('[Scene:addViewport] Viewport not found: ' .. name)
   end
 end
 
@@ -87,7 +98,39 @@ end
 function Scene:updateViewport(dt)
   local viewport = self:getViewport()
 
-  if viewport then viewport:update() end
+  if viewport then
+    viewport:update(dt)
+
+    -- Viewport target
+    if self.viewportTarget then
+      local xTarget = self.viewportTarget.x
+      local yTarget = self.viewportTarget.y
+
+      local sceneWidth = self:getWidth()
+      local sceneHeight = self:getHeight()
+
+      local halfScreenWidth = love.graphics.getWidth() / 2
+      local halfScreenHeight = love.graphics.getHeight() / 2
+
+      if xTarget < halfScreenWidth then
+        xTarget = halfScreenWidth
+      end
+
+      if yTarget < halfScreenHeight then
+        yTarget = halfScreenHeight
+      end
+
+      if xTarget > sceneWidth - halfScreenWidth then
+        xTarget = sceneWidth - halfScreenWidth
+      end
+
+      if yTarget > sceneHeight - halfScreenHeight then
+        yTarget = sceneHeight - halfScreenHeight
+      end
+
+      viewport:follow(xTarget, yTarget)
+    end
+  end
 end
 
 -- Scene:drawViewport
@@ -101,20 +144,34 @@ end
 -- Scene:placeObject
 -- Place objects in room for giving coordinates
 function Scene:placeObject(class, x, y)
-  local data = {}
-  data.createInstance = function ()
-    return class:new({ x = x, y = y, scene = self })
-  end
-  table.insert(self.objects, data)
+  local object = { class = class, x = x, y = y }
+
+  table.insert(self.objects, object)
+
+  print('[Scene:placeObject] New object registered: ' .. class.name)
+end
+
+-- Scene:setViewportTarget
+-- Set instance to be followed by viewport
+function Scene:setViewportTarget(instance)
+  self.viewportTarget = instance
+end
+
+-- Scene:createInstanceFromObject
+-- Create single instance from object item from objects array
+function Scene:createInstance(class, x, y)
+  local instance = class:new({ x = x, y = y, scene = self })
+
+  table.insert(self.instances, instance)
 end
 
 -- Scene:createInstances
 -- Loop though all objects and instantiate them
 function Scene:createInstances()
   -- Instantiate actors
-  for index,object in ipairs(self.objects) do
-    table.insert(self.instances, object.createInstance())
-  end
+  map(self.objects, function(object) self:createInstance(object.class, object.x, object.y) end)
+
+  print('[Scene:createIntances] Creating instances for: ' .. Scene.name)
 end
 
 -- Scene:destroy instances
