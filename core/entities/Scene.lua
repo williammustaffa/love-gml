@@ -185,7 +185,7 @@ end
 -- loop though instances and draw them
 function Scene:drawInstances()
   for index,instance in ipairs(self.instances) do
-    instance:draw()
+    instance:innerDraw()
   end
 end
 
@@ -194,8 +194,7 @@ end
 function Scene:updateInstances(dt)
   -- Scene update
   for index,instance in ipairs(self.instances) do
-    instance:update(dt)
-    instance:afterUpdate(dt)
+    instance:innerUpdate(dt)
   end
 end
 

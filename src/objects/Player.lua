@@ -54,8 +54,9 @@ end
 function Player:draw()
   Actor.draw(self)
   -- Player draw
-  love.graphics.setColor(rgba(0, 165, 255))
+  love.graphics.setColor(rgba(50, 50, 255))
   love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+
   love.graphics.setColor(rgba(100, 100, 255))
   love.graphics.rectangle('line', self.x + self.hspeed, self.y + self.vspeed, self.width, self.height)
 end

@@ -75,7 +75,7 @@ function Actor:processPhyshics()
   self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180);
 
   -- Apply speed
-  self.vspeed = self.vspeed + self.speed * math.sin(self.direction * math.pi / 180)
+  self.vspeed = self.vspeed - self.speed * math.sin(self.direction * math.pi / 180)
   self.hspeed = self.hspeed + self.speed * math.cos(self.direction * math.pi / 180)
 end
 
@@ -89,14 +89,19 @@ function Actor:update()
   -- Actor update
 end
 
-function Actor:afterUpdate()
+function Actor:draw()
+  -- Actor drawing
+end
+
+function Actor:innerUpdate()
+  self:update()
   self:processPhyshics()
   self:processCollision()
   self:applyPhysics()
 end
 
-function Actor:draw()
-  -- Actor drawing
+function Actor:innerDraw()
+  self:draw()
 end
 
 return Actor
