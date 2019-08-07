@@ -46,13 +46,11 @@ function Actor:placeFree(x, y)
 
   return hasPlaceFree
 end
-local nextX = 0
-local nextY = 0
-function Actor:applyCollision(dt)
-  -- Normalize ground landing
-  nextX = self.x + self.hspeed * dt
-  nextY = self.y + self.vspeed * dt
 
+function Actor:processCollision(dt)
+  -- Normalize ground landing
+  local nextX = self.x + self.hspeed * dt
+  local nextY = self.y + self.vspeed * dt
 
   if not self:placeFree(self.x, nextY) then
     while self:placeFree(self.x, math.round(self.y) + math.sign(self.vspeed)) do
@@ -71,11 +69,13 @@ function Actor:applyCollision(dt)
   end
 end
 
-function Actor:applyPhyshics(dt)
+function Actor:processPhyshics(dt)
   -- Apply gravity
   self.vspeed = self.vspeed - self.gravity * math.sin(self.gravityDirection * math.pi / 180) * dt;
   self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180) * dt;
+end
 
+function Actor:applyPhysics(dt)
   -- Apply hspeed and vspeed
   self.x = self.x + self.hspeed * dt
   self.y = self.y + self.vspeed * dt
@@ -90,8 +90,9 @@ function Actor:update(dt)
 end
 
 function Actor:afterUpdate(dt)
-  self:applyPhyshics(dt)
-  self:applyCollision(dt)
+  self:processPhyshics(dt)
+  self:processCollision(dt)
+  self:applyPhysics(dt)
 end
 
 function Actor:draw()
