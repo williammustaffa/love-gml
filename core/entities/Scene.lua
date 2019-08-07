@@ -147,8 +147,6 @@ function Scene:placeObject(class, x, y)
   local object = { class = class, x = x, y = y }
 
   table.insert(self.objects, object)
-
-  print('[Scene:placeObject] New object registered: ' .. class.name)
 end
 
 -- Scene:setViewportTarget
@@ -197,6 +195,7 @@ function Scene:updateInstances(dt)
   -- Scene update
   for index,instance in ipairs(self.instances) do
     instance:update(dt)
+    instance:afterUpdate(dt)
   end
 end
 

@@ -48,11 +48,14 @@ function Player:update(dt)
   end
 end
 
-function Player:draw(dt)
+function Player:draw()
   Actor.draw(self)
   -- Player draw
+  local dt = love.timer.getDelta()
   love.graphics.setColor(rgba(255, 165, 0))
-  love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  love.graphics.setColor(rgba(100, 100, 255))
+  love.graphics.rectangle('line', self.x + self.hspeed * dt, self.y + self.vspeed * dt, self.width, self.height)
 end
 
 return Player

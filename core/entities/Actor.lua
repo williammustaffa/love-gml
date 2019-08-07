@@ -21,10 +21,10 @@ function Actor:initialize(options)
 end
 
 function Actor:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
-  return x1 < x2 + w2 and
-         x2 < x1 + w1 and
-         y1 < y2 + h2 and
-         y2 < y1 + h1
+  return math.round(x1) < math.round(x2) + w2 and
+         math.round(x2) < math.round(x1) + w1 and
+         math.round(y1) < math.round(y2) + h2 and
+         math.round(y2) < math.round(y1) + h1
 end
 
 function Actor:placeFree(x, y)
@@ -46,34 +46,32 @@ function Actor:placeFree(x, y)
 
   return hasPlaceFree
 end
-
+local nextX = 0
+local nextY = 0
 function Actor:applyCollision(dt)
   -- Normalize ground landing
-  local nextX = self.x + self.hspeed * dt
-  local nextY = self.y + self.vspeed * dt
+  nextX = self.x + self.hspeed * dt
+  nextY = self.y + self.vspeed * dt
 
-  if not self:placeFree(nextX, self.y) then
-    while not self:placeFree(nextX, self.y) do
-      nextX = math.round(nextX) - 1
-    end
-
-    self.hspeed = 0
-    self.x = nextX
-  end
 
   if not self:placeFree(self.x, nextY) then
-    while not self:placeFree(self.x, nextY) do
-      nextY = math.round(nextY) - 1
+    while self:placeFree(self.x, math.round(self.y) + math.sign(self.vspeed)) do
+      self.y = math.round(self.y) + math.sign(self.vspeed)
     end
 
     self.vspeed = 0
-    self.y = nextY
+  end
+
+  if not self:placeFree(nextX, self.y) then
+    while self:placeFree(math.round(self.x) + math.sign(self.hspeed), self.y) do
+      self.x = math.round(self.x) + math.sign(self.hspeed)
+    end
+
+    self.hspeed = 0
   end
 end
 
-function Actor:update(dt)
-  -- Actor update
-
+function Actor:applyPhyshics(dt)
   -- Apply gravity
   self.vspeed = self.vspeed - self.gravity * math.sin(self.gravityDirection * math.pi / 180) * dt;
   self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180) * dt;
@@ -85,6 +83,15 @@ function Actor:update(dt)
   -- Apply speed and direction
   self.y = self.y + self.speed * math.sin(self.direction * math.pi / 180);
   self.x = self.x + self.speed * math.cos(self.direction * math.pi / 180);
+end
+
+function Actor:update(dt)
+  -- Actor update
+end
+
+function Actor:afterUpdate(dt)
+  self:applyPhyshics(dt)
+  self:applyCollision(dt)
 end
 
 function Actor:draw()
