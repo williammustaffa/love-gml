@@ -47,10 +47,10 @@ function Actor:placeFree(x, y)
   return hasPlaceFree
 end
 
-function Actor:processCollision(dt)
+function Actor:processCollision()
   -- Normalize ground landing
-  local nextX = self.x + self.hspeed * dt
-  local nextY = self.y + self.vspeed * dt
+  local nextX = self.x + self.hspeed
+  local nextY = self.y + self.vspeed
 
   if not self:placeFree(self.x, nextY) then
     while self:placeFree(self.x, math.round(self.y) + math.sign(self.vspeed)) do
@@ -69,30 +69,30 @@ function Actor:processCollision(dt)
   end
 end
 
-function Actor:processPhyshics(dt)
+function Actor:processPhyshics()
   -- Apply gravity
-  self.vspeed = self.vspeed - self.gravity * math.sin(self.gravityDirection * math.pi / 180) * dt;
-  self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180) * dt;
+  self.vspeed = self.vspeed - self.gravity * math.sin(self.gravityDirection * math.pi / 180);
+  self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180);
+
+  -- Apply speed
+  self.vspeed = self.vspeed + self.speed * math.sin(self.direction * math.pi / 180)
+  self.hspeed = self.hspeed + self.speed * math.cos(self.direction * math.pi / 180)
 end
 
-function Actor:applyPhysics(dt)
+function Actor:applyPhysics()
   -- Apply hspeed and vspeed
-  self.x = self.x + self.hspeed * dt
-  self.y = self.y + self.vspeed * dt
-
-  -- Apply speed and direction
-  self.y = self.y + self.speed * math.sin(self.direction * math.pi / 180);
-  self.x = self.x + self.speed * math.cos(self.direction * math.pi / 180);
+  self.x = self.x + self.hspeed
+  self.y = self.y + self.vspeed
 end
 
-function Actor:update(dt)
+function Actor:update()
   -- Actor update
 end
 
-function Actor:afterUpdate(dt)
-  self:processPhyshics(dt)
-  self:processCollision(dt)
-  self:applyPhysics(dt)
+function Actor:afterUpdate()
+  self:processPhyshics()
+  self:processCollision()
+  self:applyPhysics()
 end
 
 function Actor:draw()

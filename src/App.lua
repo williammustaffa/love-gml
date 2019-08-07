@@ -19,6 +19,8 @@ local App = class('App')
 function App:initialize()
   self.scenes = {}
   self.scene = false
+  self.fps = 60
+  self.ellapsed = 0
 
   self:addScene(require('src.scenes.DemoStage'))
   self:setScene('DemoStage')
@@ -50,9 +52,17 @@ end
 
 -- App:update:
 -- Call current scene update method
+-- Also control fps using dt
 function App:update(dt)
-  if self.scene and self.scene:isInstanceOf(Scene) then
-    self.scene:update(dt)
+  local target = 1 / self.fps
+
+  self.ellapsed = self.ellapsed + dt
+
+  if self.ellapsed >= target then
+    if self.scene and self.scene:isInstanceOf(Scene) then
+      self.scene:update()
+    end
+    self.ellapsed = 0
   end
 end
 

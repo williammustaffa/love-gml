@@ -21,25 +21,17 @@ function Stage:initialize()
     self:placeObject(Block, x * 32, love.graphics.getHeight() - 32) 
   end
 
-  for x=0, love.graphics.getWidth() * 2 / 32 do
-    if math.random() > 0.5 then
-      self:placeObject(Block, x * 32, love.graphics.getHeight() - 64) 
-    end
-  end
-  for x=0, love.graphics.getWidth() * 2 / 32 do
-    if math.random() > 0.5 then
-      self:placeObject(Block, x * 32, love.graphics.getHeight() - 96) 
-    end
-  end
-  for x=0, love.graphics.getWidth() * 2 / 32 do
-    if math.random() > 0.5 then
-      self:placeObject(Block, x * 32, love.graphics.getHeight() - 128) 
+  for y=0, (love.graphics.getHeight() - 64) / 32 do
+    for x=0, love.graphics.getWidth() * 2 / 32 do
+      if math.random() > 0.8 then
+        self:placeObject(Block, x * 32, y * 32) 
+      end
     end
   end
 end
 
-function Stage:update(dt)
-  Scene.update(self, dt)
+function Stage:update()
+  Scene.update(self)
   -- we can place global configuration here
   -- such as dynamic viewports, backgrounds, tilesets
   if self.canFlash and love.keyboard.isDown('return') then
