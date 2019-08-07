@@ -22,13 +22,13 @@ function Stage:initialize()
   end
 
   -- Place floor
-  -- for y=0, (love.graphics.getHeight() - 64) / 32 do
-  --   for x=0, love.graphics.getWidth() * 2 / 32 do
-  --     if math.random() > 0.8 then
-  --       self:placeObject(Block, x * 32, y * 32) 
-  --     end
-  --   end
-  -- end
+  for y=0, (love.graphics.getHeight() - 64) / 32 do
+    for x=0, love.graphics.getWidth() * 2 / 32 do
+      if math.random() > 0.8 then
+        self:placeObject(Block, x * 32, y * 32) 
+      end
+    end
+  end
 end
 
 function Stage:update()

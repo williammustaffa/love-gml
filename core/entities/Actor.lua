@@ -18,22 +18,29 @@ function Actor:initialize(options)
   self.width = options and options.width or 0
   self.height = options and options.height or 0
   self.scene = options and options.scene or false
+  self.type = options and options.type or 'static'
 end
 
 function Actor:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
-  return math.round(x1) < math.round(x2) + w2 and
-         math.round(x2) < math.round(x1) + w1 and
-         math.round(y1) < math.round(y2) + h2 and
-         math.round(y2) < math.round(y1) + h1
+  return x1 < x2 + w2 and
+         x2 < x1 + w1 and
+         y1 < y2 + h2 and
+         y2 < y1 + h1
 end
 
 function Actor:placeFree(x, y)
-  local hasPlaceFree = true
+  local collision = false
 
   if self.scene then
     local instances = self.scene.instances
 
-    -- Check for collission
+    local findCollision = function(instance)
+      return instance.solid and instance.id ~= self.id and self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height)
+    end
+
+    collision = table.find(instances, findCollision)
+
+    -- Check for collision
     for index,instance in ipairs(instances) do
       if instance.solid and instance.id ~= self.id then
         if self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height) then
@@ -44,7 +51,7 @@ function Actor:placeFree(x, y)
     end
   end
 
-  return hasPlaceFree
+  return not Boolean(collision)
 end
 
 function Actor:processCollision()
@@ -52,20 +59,17 @@ function Actor:processCollision()
   local nextX = self.x + self.hspeed
   local nextY = self.y + self.vspeed
 
-  if not self:placeFree(self.x, nextY) then
-    while self:placeFree(self.x, math.round(self.y) + math.sign(self.vspeed)) do
+  if not self:placeFree(nextX, nextY) then
+    while self:placeFree(nextX, math.round(self.y) + math.sign(self.vspeed)) do
       self.y = math.round(self.y) + math.sign(self.vspeed)
     end
 
-    self.vspeed = 0
-  end
-
-  if not self:placeFree(nextX, self.y) then
-    while self:placeFree(math.round(self.x) + math.sign(self.hspeed), self.y) do
+    while self:placeFree(math.round(self.x) + math.sign(self.hspeed), nextY) do
       self.x = math.round(self.x) + math.sign(self.hspeed)
     end
 
     self.hspeed = 0
+    self.vspeed = 0
   end
 end
 
@@ -95,9 +99,12 @@ end
 
 function Actor:innerUpdate()
   self:update()
-  self:processPhyshics()
-  self:processCollision()
-  self:applyPhysics()
+
+  if (self.type == 'dynamic') then
+    self:processPhyshics()
+    self:processCollision()
+    self:applyPhysics()
+  end
 end
 
 function Actor:innerDraw()

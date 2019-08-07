@@ -11,6 +11,7 @@ function Player:initialize(options)
   self.height = 32
   self.width = 32
   self.speed = 0
+  self.type = 'dynamic'
 
   -- Set this object as viewport target
   self.scene:setViewportTarget(self)
@@ -21,7 +22,7 @@ function Player:update()
 
   -- Gravity
   if self:placeFree(self.x, self.y + 1) then
-    self.gravity = 1
+    self.gravity = 2
   else
     self.gravity = 0
     self.vspeed = 0
@@ -29,15 +30,15 @@ function Player:update()
 
   -- Moving right
   if love.keyboard.isDown('right') then
-    if self:placeFree(self.x + 5, self.y) then
-      self.hspeed = 5
+    if self:placeFree(self.x + 10, self.y) then
+      self.hspeed = 10
     end
   end
 
   -- Moving left
   if love.keyboard.isDown('left') then
-    if self:placeFree(self.x - 5, self.y) then
-      self.hspeed = -5
+    if self:placeFree(self.x - 10, self.y) then
+      self.hspeed = -10
     end
   end
 
@@ -47,7 +48,7 @@ function Player:update()
   end
 
   if love.keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
-    self.vspeed = -10
+    self.vspeed = -20
   end
 end
 

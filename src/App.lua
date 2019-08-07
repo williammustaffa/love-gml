@@ -8,6 +8,7 @@ require 'core.modules.graphics.utils'
 require 'core.modules.table.utils'
 require 'core.modules.math.utils'
 require 'core.modules.string.utils'
+require 'core.modules.type.utils'
 
 -- Global entities
 local Scene = require 'core.entities.Scene'
@@ -19,7 +20,8 @@ local App = class('App')
 function App:initialize()
   self.scenes = {}
   self.scene = false
-  self.fps = 60
+  -- Fps control
+  self.updatesPerSecond = 30
   self.ellapsed = 0
 
   self:addScene(require('src.scenes.DemoStage'))
@@ -52,9 +54,9 @@ end
 
 -- App:update:
 -- Call current scene update method
--- Also control fps using dt
+-- Also control updatesPerSecond using dt
 function App:update(dt)
-  local target = 1 / self.fps
+  local target = 1 / self.updatesPerSecond
 
   self.ellapsed = self.ellapsed + dt
 

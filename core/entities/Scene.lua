@@ -170,7 +170,10 @@ end
 -- Loop though all objects and instantiate them
 function Scene:createInstances()
   -- Instantiate actors
-  table.map(self.objects, function(object) self:createInstance(object.class, object.x, object.y) end)
+  table.map(
+    self.objects,
+    function(object) self:createInstance(object.class, object.x, object.y) end
+  )
 
   print('[Scene:createIntances] Creating instances for: ' .. Scene.name)
 end
@@ -184,18 +187,20 @@ end
 -- Scene:drawInstances
 -- loop though instances and draw them
 function Scene:drawInstances()
-  for index,instance in ipairs(self.instances) do
-    instance:innerDraw()
-  end
+  table.map(
+    self.instances,
+    function(instance) instance:innerDraw() end
+  )
 end
 
 -- Scene:updateInstances
 -- loop though instances and update them
 function Scene:updateInstances(dt)
   -- Scene update
-  for index,instance in ipairs(self.instances) do
-    instance:innerUpdate(dt)
-  end
+  table.map(
+    self.instances,
+    function(instance) instance:innerUpdate() end
+  )
 end
 
 -- Scene:update
