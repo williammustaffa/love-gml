@@ -13,7 +13,6 @@ function Stage:initialize()
   Scene.initialize(self)
 
   self.width = 960
-  self.canFlash = true
   self:placeObject(Player, 0, 0)
 
   -- Place player
@@ -33,12 +32,6 @@ end
 
 function Stage:update()
   Scene.update(self)
-  -- we can place global configuration here
-  -- such as dynamic viewports, backgrounds, tilesets
-  if self.canFlash and love.keyboard.isDown('return') then
-    self:getViewport():flash(0.05, { 0, 0, 0, 1 })
-    self.canFlash = false
-  end
 end
 
 return Stage

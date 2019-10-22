@@ -189,7 +189,9 @@ end
 function Scene:drawInstances()
   table.map(
     self.instances,
-    function(instance) instance:innerDraw() end
+    function(instance) 
+      instance:draw()
+    end
   )
 end
 
@@ -197,9 +199,29 @@ end
 -- loop though instances and update them
 function Scene:updateInstances(dt)
   -- Scene update
+  -- Apply velocities to all instances
   table.map(
     self.instances,
-    function(instance) instance:innerUpdate() end
+    function(instance) 
+      instance:calculateVelocities()
+    end
+  )
+
+  -- handle intersected objects
+  table.map(
+    self.instances,
+    function(instance)
+      instance:handleCollision()
+    end
+  )
+
+  -- Update positions
+  table.map(
+    self.instances,
+    function(instance)
+      instance:applyVelocities()
+      instance:update()
+    end
   )
 end
 

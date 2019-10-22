@@ -11,7 +11,8 @@ function Player:initialize(options)
   self.height = 32
   self.width = 32
   self.speed = 0
-  self.type = 'dynamic'
+  self.dynamic = true
+  self.bounce = 0
 
   -- Set this object as viewport target
   self.scene:setViewportTarget(self)

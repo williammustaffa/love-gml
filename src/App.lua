@@ -62,6 +62,7 @@ function App:update(dt)
 
   if self.ellapsed >= target then
     if self.scene and self.scene:isInstanceOf(Scene) then
+      print('Update', dt);
       self.scene:update()
     end
     self.ellapsed = 0
