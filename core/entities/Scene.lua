@@ -85,7 +85,7 @@ function Scene:attachViewport()
   if viewport then viewport:attach() end
 end
 
--- Scene:detachViewport
+-- Scene:d etachViewport
 -- Execute detach method safely
 function Scene:detachViewport()
   local viewport = self:getViewport()
@@ -207,13 +207,6 @@ function Scene:updateInstances(dt)
     end
   )
 
-  -- handle intersected objects
-  table.map(
-    self.instances,
-    function(instance)
-      instance:handleCollision()
-    end
-  )
 
   -- Update positions
   table.map(
@@ -221,6 +214,14 @@ function Scene:updateInstances(dt)
     function(instance)
       instance:applyVelocities()
       instance:update()
+    end
+  )
+
+  -- handle intersected objects
+  table.map(
+    self.instances,
+    function(instance)
+      instance:handleCollision()
     end
   )
 end

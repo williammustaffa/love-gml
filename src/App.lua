@@ -21,7 +21,7 @@ function App:initialize()
   self.scenes = {}
   self.scene = false
   -- Fps control
-  self.updatesPerSecond = 30
+  self.updatesPerSecond = 60
   self.ellapsed = 0
 
   self:addScene(require('src.scenes.DemoStage'))
@@ -62,7 +62,6 @@ function App:update(dt)
 
   if self.ellapsed >= target then
     if self.scene and self.scene:isInstanceOf(Scene) then
-      print('Update', dt);
       self.scene:update()
     end
     self.ellapsed = 0

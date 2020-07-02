@@ -10,7 +10,7 @@ function Block:initialize(options)
   self.height = 32
   self.width = 32
   self.color = {rgba(116, 125, 140)}
-  self.bounce = 1
+  self.bounce = 0
 end
 
 function Block:update(dt)
