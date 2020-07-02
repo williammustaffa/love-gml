@@ -85,7 +85,7 @@ function Scene:attachViewport()
   if viewport then viewport:attach() end
 end
 
--- Scene:d etachViewport
+-- Scene:detachViewport
 -- Execute detach method safely
 function Scene:detachViewport()
   local viewport = self:getViewport()
@@ -207,13 +207,12 @@ function Scene:updateInstances(dt)
     end
   )
 
-
   -- Update positions
   table.map(
     self.instances,
     function(instance)
-      instance:applyVelocities()
       instance:update()
+      instance:applyVelocities()
     end
   )
 

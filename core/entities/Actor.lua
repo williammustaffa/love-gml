@@ -53,14 +53,15 @@ function Actor:applyGravity()
   self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180);
 end
 
+function Actor:applyDirectionalSpeed()
+  self.vspeed = self.vspeed - self.speed * math.sin(self.direction * math.pi / 180)
+  self.hspeed = self.hspeed + self.speed * math.cos(self.direction * math.pi / 180)
+end
+
 function Actor:calculateVelocities()
   -- Apply gravity
   self:applyGravity()
-
-  -- Apply speed
-  -- TODO: handle speed later, it can't be applied to vssped nor hspeed
-  -- self.vspeed = self.vspeed - self.speed * math.sin(self.direction * math.pi / 180)
-  -- self.hspeed = self.hspeed + self.speed * math.cos(self.direction * math.pi / 180)
+  self:applyDirectionalSpeed()
 end
 
 
@@ -165,6 +166,7 @@ function Actor:resolveCollision(instance, separationX, separationY)
   self.hspeed = hspeed - penetrationX * restitution + tangentX * friction
   self.vspeed = vspeed - penetrationY * restitution + tangentY * friction
 
+  print('self.vspeed', self.vspeed)
   if penetrationSpeed <= 0 then 
     self.x = self.x + separationX
     self.y = self.y + separationY

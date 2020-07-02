@@ -12,7 +12,7 @@ function Player:initialize(options)
   self.width = 32
   self.speed = 0
   self.dynamic = true
-
+  self.gravity = 1
   -- Set this object as viewport target
   self.scene:setViewportTarget(self)
 end
@@ -20,13 +20,12 @@ end
 function Player:update()
   Actor.update(self)
 
-  -- Gravity
-  if self:placeFree(self.x, self.y + 1) then
-    self.gravity = 1
-  else
-    self.gravity = 0
-    self.vspeed = 0
-  end
+  -- -- Gravity
+  -- if self:placeFree(self.x, self.y + 1) then
+  --   self.gravity = 1
+  -- else
+  --   self.gravity = 0
+  -- end
 
   -- Moving right
   if love.keyboard.isDown('right') then
