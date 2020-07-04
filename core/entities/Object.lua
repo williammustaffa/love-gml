@@ -1,8 +1,8 @@
--- File: Actor.lua
-local Actor = class('entity.Actor')
+-- File:Object.lua
+local Object = class('entity.Object')
 
-function Actor:initialize(options)
-  -- Actor creation
+function Object:initialize(options)
+  --Object creation
   -- TODO: create safe get function in helpers
   self.x = options and options.x or 0
   self.y = options and options.y or 0
@@ -19,24 +19,24 @@ function Actor:initialize(options)
   self.direction = options and options.direction or 0
   self.width = options and options.width or 0
   self.height = options and options.height or 0
-  self.scene = options and options.scene or false
+  self.room = options and options.room or false
   self.dynamic = options and options.type or false
   self.bounce = options and options.bounce or 0
   self.friction = options and options.friction or 0
 end
 
-function Actor:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
+function Object:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
   return x1 < x2 + w2 and
          x2 < x1 + w1 and
          y1 < y2 + h2 and
          y2 < y1 + h1
 end
 
-function Actor:placeFree(x, y)
+function Object:placeFree(x, y)
   local collision = false
 
-  if self.scene then
-    local instances = self.scene.instances
+  if self.room then
+    local instances = self.room.instances
 
     local findCollision = function(instance)
       return instance.solid and instance.id ~= self.id and self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height)
@@ -48,26 +48,29 @@ function Actor:placeFree(x, y)
   return not Boolean(collision)
 end
 
-function Actor:applyGravity()
-  self.vspeed = self.vspeed - self.gravity * math.sin(self.gravityDirection * math.pi / 180);
-  self.hspeed = self.hspeed + self.gravity * math.cos(self.gravityDirection * math.pi / 180);
+function Object:applyGravity()
+  local radians = math.rad(self.gravityDirection)
+  local vacceleration = self.gravity * math.sin(radians);
+  local hacceleration = self.gravity * math.cos(radians);
+
+  -- if self.dynamic then print("asdasdasd", radians) end
+
+  self.vspeed = self.vspeed - vacceleration
+  self.hspeed = self.hspeed + hacceleration
 end
 
-function Actor:applyDirectionalSpeed()
-  self.vspeed = self.vspeed - self.speed * math.sin(self.direction * math.pi / 180)
-  self.hspeed = self.hspeed + self.speed * math.cos(self.direction * math.pi / 180)
+function Object:ApplySpeed()
+  local radians = math.rad(self.direction)
+  local vacceleration = self.speed * math.sin(radians);
+  local hacceleration = self.speed * math.cos(radians);
+
+  self.vspeed = self.vspeed - vacceleration
+  self.hspeed = self.hspeed + hacceleration
 end
 
-function Actor:calculateVelocities()
-  -- Apply gravity
-  self:applyGravity()
-  self:applyDirectionalSpeed()
-end
-
-
-function Actor:handleCollision()
-  if self.scene and self.dynamic == true then
-    local instances = self.scene.instances
+function Object:handleCollision()
+  if self.room and self.dynamic == true then
+    local instances = self.room.instances
 
     local mapCollision = function(instance)
       if instance.id == self.id then
@@ -91,7 +94,7 @@ function Actor:handleCollision()
   end
 end
 
-function Actor:calculateSeparators(instance)
+function Object:calculateSeparators(instance)
   -- distance between the rects
   local distanceX = self.x - instance.x
   local distanceY = self.y - instance.y
@@ -134,7 +137,7 @@ function Actor:calculateSeparators(instance)
   return separationX, separationY
 end
 
-function Actor:resolveCollision(instance, separationX, separationY)
+function Object:resolveCollision(instance, separationX, separationY)
   -- find the collision normal
   local delta = math.sqrt(separationX * separationX + separationY * separationY)
 
@@ -162,28 +165,39 @@ function Actor:resolveCollision(instance, separationX, separationY)
   -- friction
   local friction = math.min(self.friction, instance.friction or 0)
 
+  print('[collision] self.vspeed', self.vspeed)
+  print('[collision] self.hspeed', self.hspeed)
+
   -- change the velocity of shape a
   self.hspeed = hspeed - penetrationX * restitution + tangentX * friction
   self.vspeed = vspeed - penetrationY * restitution + tangentY * friction
 
-  print('self.vspeed', self.vspeed)
+  print('[collision] self.vspeed', self.vspeed)
+  print('[collision] self.hspeed', self.hspeed)
+
   if penetrationSpeed <= 0 then 
     self.x = self.x + separationX
     self.y = self.y + separationY
   end
 end
 
-function Actor:applyVelocities()
-  self.x = self.x + self.hspeed
-  self.y = self.y + self.vspeed
+function Object:applyVelocities()
+  local dt = love.timer.getDelta()
+
+  -- Apply forces that modify vspeed/hspeed
+  self:applyGravity()
+  self:ApplySpeed()
+
+  self.x = self.x + self.hspeed * dt
+  self.y = self.y + self.vspeed * dt
 end
 
-function Actor:update()
-  -- Actor update
+function Object:update()
+  --Object update
 end
 
-function Actor:draw()
-  -- Actor drawing
+function Object:draw()
+  --Object drawing
 end
 
-return Actor
+return Object

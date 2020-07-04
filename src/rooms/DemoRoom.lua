@@ -2,15 +2,15 @@
 -- here we will create the room information
 -- place objects, set backgrounds and tilesets
 
--- Important to set the subclass name as it will be used in the scene navigation
-local Scene = require 'core.entities.Scene'
+-- Important to set the subclass name as it will be used in the room navigation
+local Room = require 'core.entities.Room'
 local Player = require 'src.objects.Player'
 local Block = require 'src.objects.Block'
 
-local Stage = Scene:subclass('DemoStage')
+local DemoRoom = Room:subclass('DemoRoom')
 
-function Stage:initialize()
-  Scene.initialize(self)
+function DemoRoom:initialize()
+  Room.initialize(self)
 
   self.width = 960
   self:placeObject(Player, 0, 0)
@@ -30,8 +30,8 @@ function Stage:initialize()
   end
 end
 
-function Stage:update()
-  Scene.update(self)
+function DemoRoom:update()
+  Room.update(self)
 end
 
-return Stage
+return DemoRoom

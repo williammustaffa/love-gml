@@ -1,13 +1,13 @@
--- File: Scene.lua
+-- File: Room.lua
 local Camera = require('core.libs.Camera')
 
 -- Create class
-local Scene = class('entity.Scene')
+local Room = class('entity.Room')
 
--- Scene:initialize
+-- Room:initialize
 -- Mostly like an constructor
-function Scene:initialize()
-  -- Scene creation
+function Room:initialize()
+  -- Room creation
   self.objects = {}
   self.instances = {}
   self.viewports = {}
@@ -18,84 +18,84 @@ function Scene:initialize()
   self:addViewport('default', {})
 end
 
--- Scene:init
+-- Room:init
 -- Start executing the room instances
-function Scene:init()
-  self:kill() -- Reset scene
+function Room:init()
+  self:kill() -- Reset room
   self:setViewport('default') -- Set default viewport
   self:createInstances() -- create instances
 end
 
--- Scene:kill
+-- Room:kill
 -- Reset room data
-function Scene:kill()
+function Room:kill()
   self:resetViewport()
   self:destroyInstances()
 end
 
-function Scene:getHeight()
+function Room:getHeight()
   return math.max(self.height, love.graphics.getHeight())
 end
 
-function Scene:getWidth()
+function Room:getWidth()
   return math.max(self.width, love.graphics.getWidth())
 end
 
--- Scene:addViewport
--- Add a viewport to the scene viewport list
-function Scene:addViewport(name, options)
+-- Room:addViewport
+-- Add a viewport to the room viewport list
+function Room:addViewport(name, options)
   if not self.viewports[name] then
     self.viewports[name] = Camera(unpack(options))
   else
-    print('[Scene:addViewport] Viewport name already exists: ', name)
+    print('[Room:addViewport] Viewport name already exists: ', name)
   end
 end
 
--- Scene:resetViewport
+-- Room:resetViewport
 -- Set viewport to its initial state
-function Scene:resetViewport()
+function Room:resetViewport()
   self.viewport = false
 end
 
--- Scene:setViewport
+-- Room:setViewport
 -- set current app viewport
-function Scene:setViewport(name)
+function Room:setViewport(name)
   local viewport = self.viewports[name]
 
   if viewport then
     self.viewport = viewport
-    print('[Scene:addViewport] Viewport set: ' .. name)
+    print('[Room:addViewport] Viewport set: ' .. name)
   else
     self:resetViewport()
-    print('[Scene:addViewport] Viewport not found: ' .. name)
+    print('[Room:addViewport] Viewport not found: ' .. name)
   end
 end
 
--- Scene:getViewport
+-- Room:getViewport
 -- Exposes viewport
-function Scene:getViewport()
+function Room:getViewport()
   return self.viewport
 end
 
--- Scene:attachViewport
+-- Room:attachViewport
 -- Execute attach method safely
-function Scene:attachViewport()
+function Room:attachViewport()
   local viewport = self:getViewport()
 
   if viewport then viewport:attach() end
 end
 
--- Scene:detachViewport
+-- Room:detachViewport
 -- Execute detach method safely
-function Scene:detachViewport()
+function Room:detachViewport()
   local viewport = self:getViewport()
 
   if viewport then viewport:detach() end
 end
 
--- Scene:updateViewport
+-- Room:updateViewport
 -- Execute update method safely
-function Scene:updateViewport(dt)
+function Room:updateViewport(dt)
   local viewport = self:getViewport()
 
   if viewport then
@@ -106,8 +106,8 @@ function Scene:updateViewport(dt)
       local xTarget = self.viewportTarget.x
       local yTarget = self.viewportTarget.y
 
-      local sceneWidth = self:getWidth()
-      local sceneHeight = self:getHeight()
+      local roomWidth = self:getWidth()
+      local roomHeight = self:getHeight()
 
       local halfScreenWidth = love.graphics.getWidth() / 2
       local halfScreenHeight = love.graphics.getHeight() / 2
@@ -120,12 +120,12 @@ function Scene:updateViewport(dt)
         yTarget = halfScreenHeight
       end
 
-      if xTarget > sceneWidth - halfScreenWidth then
-        xTarget = sceneWidth - halfScreenWidth
+      if xTarget > roomWidth - halfScreenWidth then
+        xTarget = roomWidth - halfScreenWidth
       end
 
-      if yTarget > sceneHeight - halfScreenHeight then
-        yTarget = sceneHeight - halfScreenHeight
+      if yTarget > roomHeight - halfScreenHeight then
+        yTarget = roomHeight - halfScreenHeight
       end
 
       viewport:follow(xTarget, yTarget)
@@ -133,32 +133,32 @@ function Scene:updateViewport(dt)
   end
 end
 
--- Scene:drawViewport
+-- Room:drawViewport
 -- Execute draw method safely
-function Scene:drawViewport()
+function Room:drawViewport()
   local viewport = self:getViewport()
 
   if viewport then viewport:draw() end
 end
 
--- Scene:placeObject
+-- Room:placeObject
 -- Place objects in room for giving coordinates
-function Scene:placeObject(class, x, y)
+function Room:placeObject(class, x, y)
   local object = { class = class, x = x, y = y }
 
   table.insert(self.objects, object)
 end
 
--- Scene:setViewportTarget
+-- Room:setViewportTarget
 -- Set instance to be followed by viewport
-function Scene:setViewportTarget(instance)
+function Room:setViewportTarget(instance)
   self.viewportTarget = instance
 end
 
--- Scene:createInstanceFromObject
+-- Room:createInstanceFromObject
 -- Create single instance from object item from objects array
-function Scene:createInstance(class, x, y)
-  local instance = class:new({ x = x, y = y, scene = self })
+function Room:createInstance(class, x, y)
+  local instance = class:new({ x = x, y = y, room = self })
   local id = #self.instances + 1
 
   instance.id = id
@@ -166,27 +166,27 @@ function Scene:createInstance(class, x, y)
   self.instances[id] = instance
 end
 
--- Scene:createInstances
+-- Room:createInstances
 -- Loop though all objects and instantiate them
-function Scene:createInstances()
-  -- Instantiate actors
+function Room:createInstances()
+  -- Instantiate objects
   table.map(
     self.objects,
     function(object) self:createInstance(object.class, object.x, object.y) end
   )
 
-  print('[Scene:createIntances] Creating instances for: ' .. Scene.name)
+  print('[Room:createIntances] Creating instances for: ' .. Room.name)
 end
 
--- Scene:destroy instances
+-- Room:destroy instances
 -- Reset instances table
-function Scene:destroyInstances()
+function Room:destroyInstances()
   self.instances = {}
 end
 
--- Scene:drawInstances
+-- Room:drawInstances
 -- loop though instances and draw them
-function Scene:drawInstances()
+function Room:drawInstances()
   table.map(
     self.instances,
     function(instance) 
@@ -195,18 +195,10 @@ function Scene:drawInstances()
   )
 end
 
--- Scene:updateInstances
+-- Room:updateInstances
 -- loop though instances and update them
-function Scene:updateInstances(dt)
-  -- Scene update
-  -- Apply velocities to all instances
-  table.map(
-    self.instances,
-    function(instance) 
-      instance:calculateVelocities()
-    end
-  )
-
+function Room:updateInstances(dt)
+  -- Room update
   -- Update positions
   table.map(
     self.instances,
@@ -225,19 +217,19 @@ function Scene:updateInstances(dt)
   )
 end
 
--- Scene:update
+-- Room:update
 -- Update instances accordingly its update method
-function Scene:update(dt)
+function Room:update(dt)
   self:updateViewport(dt)
   self:updateInstances(dt)
 end
 
--- Scene:draw
+-- Room:draw
 -- Update instances accordingly its draw method
-function Scene:draw()
+function Room:draw()
   local viewport = self:getViewport()
 
-  -- Scene drawing
+  -- Room drawing
   if viewport then
     self:attachViewport()
     self:drawInstances()
@@ -250,4 +242,4 @@ function Scene:draw()
   end
 end
 
-return Scene
+return Room
