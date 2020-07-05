@@ -2,15 +2,39 @@
 local Room = require 'core.entities.Room'
 local Game = class('entities.Game')
 
+-- Register custom methods
+function Game:create() end 
+function Game:step() end 
+function Game:draw() end 
+
 -- Game:initialize:
--- Constructor method
+-- Game constructor
 function Game:initialize()
   self.rooms = {}
   self.room = false
+
+  self:create()
+end
+
+-- Game:update:
+function Game:runStep()
+  if self.room and self.room:isInstanceOf(Room) then
+    self.room:runStep()
+  end
+end
+
+-- Game:draw:
+-- Call current room draw method
+function Game:runDraw()
+  if self.room and self.room:isInstanceOf(Room) then
+    self.room:runDraw()
+  end
+
+  self:draw()
 end
 
 function Game:addRoom(room)
-  print('[App:addRoom] Added new room: ' .. Room.name)
+  print('[App:addRoom] Added new room: ' .. room.name)
   self.rooms[room.name] = room:new()
 end
 
@@ -30,21 +54,6 @@ function Game:setRoom(roomName)
   else
     print('[Game:setRoom] Failed running room: ' .. roomName)
     self.room = false
-  end
-end
-
--- Game:update:
-function Game:update()
-  if self.room and self.room:isInstanceOf(Room) then
-    self.room:update()
-  end
-end
-
--- Game:draw:
--- Call current room draw method
-function Game:draw()
-  if self.room and self.room:isInstanceOf(Room) then
-    self.room:draw()
   end
 end
 

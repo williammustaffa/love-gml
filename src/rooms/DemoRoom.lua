@@ -9,9 +9,7 @@ local Block = require 'src.objects.Block'
 
 local DemoRoom = Room:subclass('DemoRoom')
 
-function DemoRoom:initialize()
-  Room.initialize(self)
-
+function DemoRoom:create()
   self.width = 960
   self:placeObject(Player, 0, 0)
 
@@ -28,10 +26,6 @@ function DemoRoom:initialize()
       end
     end
   end
-end
-
-function DemoRoom:update()
-  Room.update(self)
 end
 
 return DemoRoom

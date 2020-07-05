@@ -1,11 +1,16 @@
 -- File: Room.lua
-local Camera = require('core.libs.Camera')
+local Camera = require'core.libs.Camera'
 
 -- Create class
 local Room = class('entity.Room')
 
+-- Register custom method
+function Room:create() print('room create') end
+function Room:step() end
+function Room:draw() end
+
 -- Room:initialize
--- Mostly like an constructor
+-- Room constructor
 function Room:initialize()
   -- Room creation
   self.objects = {}
@@ -16,6 +21,37 @@ function Room:initialize()
   self.height = 480
 
   self:addViewport('default', {})
+  self:create()
+end
+
+-- Room:update
+-- Update instances accordingly its update method
+function Room:runStep()
+  self:updateViewport()
+  self:updateInstances()
+
+  -- Call custom method
+  self:step()
+end
+
+-- Room:draw
+-- Update instances accordingly its draw method
+function Room:runDraw()
+  local viewport = self:getViewport()
+
+  -- Room drawing
+  if viewport then
+    self:attachViewport()
+    self:drawInstances()
+    self:detachViewport()
+    -- Added for library features support
+    self:drawViewport()
+  else
+    -- Fallback
+    self:drawInstances()
+  end
+
+  self:draw()
 end
 
 -- Room:init
@@ -95,7 +131,8 @@ end
 
 -- Room:updateViewport
 -- Execute update method safely
-function Room:updateViewport(dt)
+function Room:updateViewport()
+  local dt = love.timer.getDelta()
   local viewport = self:getViewport()
 
   if viewport then
@@ -190,20 +227,20 @@ function Room:drawInstances()
   table.map(
     self.instances,
     function(instance) 
-      instance:draw()
+      instance:runDraw()
     end
   )
 end
 
 -- Room:updateInstances
 -- loop though instances and update them
-function Room:updateInstances(dt)
+function Room:updateInstances()
   -- Room update
   -- Update positions
   table.map(
     self.instances,
     function(instance)
-      instance:update()
+      instance:runStep()
       instance:applyVelocities()
     end
   )
@@ -215,31 +252,6 @@ function Room:updateInstances(dt)
       instance:handleCollision()
     end
   )
-end
-
--- Room:update
--- Update instances accordingly its update method
-function Room:update(dt)
-  self:updateViewport(dt)
-  self:updateInstances(dt)
-end
-
--- Room:draw
--- Update instances accordingly its draw method
-function Room:draw()
-  local viewport = self:getViewport()
-
-  -- Room drawing
-  if viewport then
-    self:attachViewport()
-    self:drawInstances()
-    self:detachViewport()
-    -- Added for library features support
-    self:drawViewport()
-  else
-    -- Fallback
-    self:drawInstances()
-  end
 end
 
 return Room

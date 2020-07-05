@@ -1,9 +1,14 @@
 -- File:Object.lua
 local Object = class('entity.Object')
 
+-- Register custom method
+function Object:create() end
+function Object:step() end
+function Object:draw() end
+
+-- Object:initialize
+-- Object constructor
 function Object:initialize(options)
-  --Object creation
-  -- TODO: create safe get function in helpers
   self.x = options and options.x or 0
   self.y = options and options.y or 0
   self.xOffset = options and options.xOffset or 0
@@ -23,6 +28,28 @@ function Object:initialize(options)
   self.dynamic = options and options.type or false
   self.bounce = options and options.bounce or 0
   self.friction = options and options.friction or 0
+  self.sprite = false
+
+  self:create()
+end
+
+
+function Object:runStep()
+  -- Object update
+  if self.sprite then
+    self.sprite:runStep()
+  end
+
+  self:step()
+end
+
+function Object:runDraw()
+  -- Object drawing
+  if self.sprite then
+    self.sprite:runDraw()
+  end
+
+  self:draw()
 end
 
 function Object:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
@@ -182,14 +209,6 @@ function Object:applyVelocities()
 
   self.x = self.x + self.hspeed * dt
   self.y = self.y + self.vspeed * dt
-end
-
-function Object:update()
-  --Object update
-end
-
-function Object:draw()
-  --Object drawing
 end
 
 return Object

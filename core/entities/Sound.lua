@@ -5,7 +5,7 @@ function Sound:initialize()
   -- Sound creation
 end
 
-function Sound:update(dt)
+function Sound:update()
   -- Sound update
 end
 

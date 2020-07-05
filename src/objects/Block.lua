@@ -3,8 +3,7 @@ local Object = require 'core.entities.Object'
 
 local Block = Object:subclass('Block')
 
-function Block:initialize(options)
- Object.initialize(self, options)
+function Block:create(options)
   -- Block creation
   self.solid = true
   self.height = 32
@@ -14,8 +13,7 @@ function Block:initialize(options)
   self.friction = 0
 end
 
-function Block:update()
- Object.update(self)
+function Block:step()
   -- Block update
 end
 

@@ -16,9 +16,9 @@ function love.load()
 end
 
 function love.update()
-  app:update()
+  app:runStep()
 end
 
 function love.draw()
-  app:draw()
+  app:runDraw()
 end
