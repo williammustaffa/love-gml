@@ -11,6 +11,7 @@ This project uses Löve2d along with lua language. To prepare your development e
 * [libs/](./libs)
   * [middleclass.lua](./libs/middleclass.lua)
   * [debugger.lua](./libs/debugger.lua)
+  * [anim8.lua](./libs/anim8.lua)
 * [core/](./core)
   * [entities/](./core/entities)
     * [Game.lua](./core/entities/Game.lua)
@@ -33,9 +34,10 @@ This project uses Löve2d along with lua language. To prepare your development e
 * [README.md](./README.md)
 
 ### Libs
-- **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support
+- **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support.
 - **[debugger](https://github.com/slembcke/debugger.lua)**: A simple, embedabble CLI debugger for Lua.
 - **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
+- **[anim8](https://github.com/kikito/anim8)**: Animation library for LÖVE.
 
 ## Usage
 TODO
