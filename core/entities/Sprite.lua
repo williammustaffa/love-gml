@@ -13,13 +13,13 @@ function Sprite:initialize()
   -- Grid variables
   self.imageWidth = self.image:getWidth()
   self.imageHeight = self.image:getHeight()
-  self.frameWidth = math.floor(self.imageWidth / 20)
-  self.frameHeight = math.floor(self.imageHeight / 1)
-  self.left = 0
-  self.top = 0
-  self.border = 0
+  self.frameWidth = math.floor(self.imageWidth / self.hFrames)
+  self.frameHeight = math.floor(self.imageHeight / self.vFrames)
+  self.left = self.left or 0
+  self.top = self.top or 0
+  self.border = self.border or 0
 
-  
+  print ('source', self.source)
   print('imageHeight', typeOf(self.imageHeight), self.imageHeight)
   print('imageWidth', typeOf(self.imageWidth), self.imageWidth)
   print('frameHeight', typeOf(self.frameHeight), self.frameHeight)
@@ -37,9 +37,7 @@ function Sprite:initialize()
   )
 
   -- Animation variables
-  self.frames = grid:getFrames(
-    '1-20', 1
-  )
+  self.frames = grid:getFrames(unpack(self.frameMap))
   self.speed = 0.05
   self.onLoop = nil
 
@@ -53,8 +51,16 @@ function Sprite:runStep()
 end
 
 function Sprite:runDraw(instance)
-  -- animation:draw(image, x,y, angle, scalex, scaley, offsetx, offsety, axisx, axisy)
-  self.animation:draw(self.image, instance.x, instance.y, 0, 0.5, 0.5)
+  self.animation:draw(
+    self.image, -- love image
+    instance.x + instance.width / 2, -- x position
+    instance.y + instance.height / 2, -- y position
+    0, -- angle
+    instance.xScale, -- x scale
+    instance.yScale, -- y scale
+    self.frameWidth / 2, -- x offset
+    self.frameHeight / 2 -- y offset, axis x, axis y
+  )
 end
 
 return Sprite

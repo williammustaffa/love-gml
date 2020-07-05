@@ -28,7 +28,7 @@ function Object:initialize(options)
   self.dynamic = options and options.type or false
   self.bounce = options and options.bounce or 0
   self.friction = options and options.friction or 0
-  self.sprite = false
+  self.sprite = option and options.sprite or false
 
   self:create()
 end
@@ -44,12 +44,16 @@ function Object:runStep()
 end
 
 function Object:runDraw()
-  self:draw()
+  if __conf__.debug == true then
+    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+  end
 
   -- Object drawing
   if self.sprite then
     self.sprite:runDraw(self)
   end
+
+  self:draw()
 end
 
 function Object:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)

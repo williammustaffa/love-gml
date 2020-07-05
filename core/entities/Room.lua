@@ -17,6 +17,7 @@ function Room:initialize()
   self.instances = {}
   self.viewports = {}
   self.viewport = false
+  self.viewportTarget = false
   self.width = 640
   self.height = 480
 
@@ -37,21 +38,22 @@ end
 -- Room:draw
 -- Update instances accordingly its draw method
 function Room:runDraw()
-  local viewport = self:getViewport()
-
   -- Room drawing
-  if viewport then
-    self:attachViewport()
+  if self.viewport then
+    self.viewport:attach()
+
+    -- Draw inside viewport
     self:drawInstances()
-    self:detachViewport()
+    self:draw()
+
+    self.viewport:detach()
+
     -- Added for library features support
-    self:drawViewport()
+    self.viewport:draw()
   else
     -- Fallback
     self:drawInstances()
   end
-
-  self:draw()
 end
 
 -- Room:init
@@ -113,33 +115,16 @@ function Room:getViewport()
   return self.viewport
 end
 
--- Room:attachViewport
--- Execute attach method safely
-function Room:attachViewport()
-  local viewport = self:getViewport()
-
-  if viewport then viewport:attach() end
-end
-
--- Room:detachViewport
--- Execute detach method safely
-function Room:detachViewport()
-  local viewport = self:getViewport()
-
-  if viewport then viewport:detach() end
-end
-
 -- Room:updateViewport
 -- Execute update method safely
 function Room:updateViewport()
   local dt = love.timer.getDelta()
-  local viewport = self:getViewport()
 
-  if viewport then
-    viewport:update(dt)
+  if self.viewport then
+    self.viewport:update(dt)
 
-    -- Viewport target
     if self.viewportTarget then
+        -- Viewport target
       local xTarget = self.viewportTarget.x
       local yTarget = self.viewportTarget.y
 
@@ -165,17 +150,12 @@ function Room:updateViewport()
         yTarget = roomHeight - halfScreenHeight
       end
 
-      viewport:follow(xTarget, yTarget)
+      xTarget = math.round(xTarget)
+      yTarget = math.round(yTarget)
+
+      self.viewport:follow(xTarget, yTarget)
     end
   end
-end
-
--- Room:drawViewport
--- Execute draw method safely
-function Room:drawViewport()
-  local viewport = self:getViewport()
-
-  if viewport then viewport:draw() end
 end
 
 -- Room:placeObject
