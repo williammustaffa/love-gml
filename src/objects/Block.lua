@@ -18,7 +18,7 @@ end
 
 function Block:draw()
   -- Block draw
-  love.graphics.setColor(rgba(116, 125, 140, 255))
+  love.graphics.setColor(rgba(100, 100, 100))
   love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
   love.graphics.setColor(rgba(255, 255, 255, 255))
 end

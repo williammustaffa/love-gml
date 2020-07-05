@@ -28,6 +28,7 @@ function Object:initialize(options)
   self.dynamic = options and options.type or false
   self.bounce = options and options.bounce or 0
   self.friction = options and options.friction or 0
+  self.color = options and options.color or rgba(255, 255, 255)
   self.sprite = option and options.sprite or false
 
   self:create()
@@ -98,7 +99,7 @@ function Object:ApplySpeed()
 end
 
 function Object:handleCollision()
-  if self.room and self.dynamic == true then
+  if self.room and self.dynamic then
     local instances = self.room.instances
 
     local mapCollision = function(instance)
@@ -118,16 +119,22 @@ function Object:handleCollision()
 end
 
 function Object:calculateSeparators(instance)
+  -- Calculate enter x and center y
+  local sxx = self.x + (self.width / 2)
+  local ixx = instance.x + (instance.width / 2)
+  local syy = self.y + (self.height / 2)
+  local iyy = instance.y + (instance.height / 2)
+
   -- distance between the rects
-  local distanceX = self.x - instance.x
-  local distanceY = self.y - instance.y
+  local distanceX = sxx - ixx
+  local distanceY = syy - iyy
 
   local absDistanceX = math.abs(distanceX)
   local absDistanceY = math.abs(distanceY)
 
   -- sum of the extents
-  local sumHalfWidth = self.width / 2 + instance.width / 2
-  local sumHalfHeight = self.height / 2 + instance.height / 2
+  local sumHalfWidth = (self.width + instance.width) / 2
+  local sumHalfHeight = (self.height + instance.height) / 2
 
   if absDistanceX >= sumHalfWidth or absDistanceY >= sumHalfHeight then
     -- no collision

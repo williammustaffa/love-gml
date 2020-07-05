@@ -8,7 +8,6 @@ local SpriteIdle = require 'src.sprites.SpriteIdle'
 local Player = Object:subclass('Player')
 
 function Player:create(options)
-  self.x = love.graphics.getWidth() / 2 - 16
   self.y = 0
   self.height = 32
   self.width = 20
@@ -26,14 +25,14 @@ end
 
 function Player:step()
   -- Moving right
-  if love.keyboard.isDown('right') and self:placeFree(self.x + 1, self.y) then
+  if love.keyboard.isDown('right') then
     self.hspeed = 50
     self.xScale = 0.5
     self.sprite = SpriteRun
   end
 
   -- Moving left
-  if love.keyboard.isDown('left') and self:placeFree(self.x - 1, self.y) then
+  if love.keyboard.isDown('left') then
     self.hspeed = -50
     self.xScale = -0.5
     self.sprite = SpriteRun
@@ -51,8 +50,7 @@ function Player:step()
 end
 
 function Player:draw()
-  -- love.graphics.setColor(rgba(50, 50, 255))
-  -- love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  -- Draw event
 end
 
 return Player

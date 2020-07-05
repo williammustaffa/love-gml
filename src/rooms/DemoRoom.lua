@@ -11,7 +11,6 @@ local DemoRoom = Room:subclass('DemoRoom')
 
 function DemoRoom:create()
   self.width = 960
-  self:placeObject(Player, 0, 0)
 
   -- Place player
   for x=0, love.graphics.getWidth() * 2 / 32 do
@@ -26,6 +25,8 @@ function DemoRoom:create()
       end
     end
   end
+
+  self:placeObject(Player, 0, 0)
 end
 
 return DemoRoom
