@@ -47,7 +47,7 @@ function Room:addViewport(name, options)
   if not self.viewports[name] then
     self.viewports[name] = Camera(unpack(options))
   else
-    print('[Room:addViewport] Viewport name already exists: ', name)
+    print('[Room:addViewport] Viewport already added: ', name)
   end
 end
 

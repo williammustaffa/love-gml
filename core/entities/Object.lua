@@ -53,8 +53,6 @@ function Object:applyGravity()
   local vacceleration = self.gravity * math.sin(radians);
   local hacceleration = self.gravity * math.cos(radians);
 
-  -- if self.dynamic then print("asdasdasd", radians) end
-
   self.vspeed = self.vspeed - vacceleration
   self.hspeed = self.hspeed + hacceleration
 end
@@ -81,9 +79,9 @@ function Object:handleCollision()
 
       if separationX and separationY then
         instance.color = {rgba(125, 116, 0)}
-        print('Logging collision instance', instance)
-        print('Logging collision separator X', separationX)
-        print('Logging collision separator Y', separationY)
+        -- print('Logging collision instance', instance)
+        -- print('Logging collision separator X', separationX)
+        -- print('Logging collision separator Y', separationY)
         self:resolveCollision(instance, separationX, separationY)
       else
         instance.color = {rgba(116, 125, 140)}
@@ -165,15 +163,9 @@ function Object:resolveCollision(instance, separationX, separationY)
   -- friction
   local friction = math.min(self.friction, instance.friction or 0)
 
-  print('[collision] self.vspeed', self.vspeed)
-  print('[collision] self.hspeed', self.hspeed)
-
   -- change the velocity of shape a
   self.hspeed = hspeed - penetrationX * restitution + tangentX * friction
   self.vspeed = vspeed - penetrationY * restitution + tangentY * friction
-
-  print('[collision] self.vspeed', self.vspeed)
-  print('[collision] self.hspeed', self.hspeed)
 
   if penetrationSpeed <= 0 then 
     self.x = self.x + separationX

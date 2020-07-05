@@ -13,6 +13,7 @@ function Player:initialize(options)
   self.speed = 0
   self.dynamic = true
   self.gravity = 10
+
   -- Set this object as viewport target
   self.room:setViewportTarget(self)
 end
