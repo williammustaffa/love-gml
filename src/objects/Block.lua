@@ -8,7 +8,6 @@ function Block:create(options)
   self.solid = true
   self.height = 32
   self.width = 32
-  self.color = {rgba(116, 125, 140)}
   self.bounce = 0
   self.friction = 0
 end
@@ -18,10 +17,10 @@ function Block:step()
 end
 
 function Block:draw()
- Object.draw(self)
   -- Block draw
-  love.graphics.setColor(unpack(self.color))
+  love.graphics.setColor(rgba(116, 125, 140, 255))
   love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  love.graphics.setColor(rgba(255, 255, 255, 255))
 end
 
 return Block

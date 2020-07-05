@@ -44,12 +44,12 @@ function Object:runStep()
 end
 
 function Object:runDraw()
+  self:draw()
+
   -- Object drawing
   if self.sprite then
-    self.sprite:runDraw()
+    self.sprite:runDraw(self)
   end
-
-  self:draw()
 end
 
 function Object:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
@@ -72,7 +72,7 @@ function Object:placeFree(x, y)
     collision = table.find(instances, findCollision)
   end
 
-  return not Boolean(collision)
+  return not toBoolean(collision)
 end
 
 function Object:applyGravity()
@@ -105,13 +105,7 @@ function Object:handleCollision()
       local separationX, separationY = self:calculateSeparators(instance)
 
       if separationX and separationY then
-        instance.color = {rgba(125, 116, 0)}
-        -- print('Logging collision instance', instance)
-        -- print('Logging collision separator X', separationX)
-        -- print('Logging collision separator Y', separationY)
         self:resolveCollision(instance, separationX, separationY)
-      else
-        instance.color = {rgba(116, 125, 140)}
       end
     end
 

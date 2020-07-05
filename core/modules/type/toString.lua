@@ -1,3 +1,3 @@
-function String(val)
+function toString(val)
   return tostring(val)
 end

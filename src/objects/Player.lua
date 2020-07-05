@@ -43,8 +43,8 @@ function Player:step()
 end
 
 function Player:draw()
-  love.graphics.setColor(rgba(50, 50, 255))
-  love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
+  -- love.graphics.setColor(rgba(50, 50, 255))
+  -- love.graphics.rectangle('fill', self.x, self.y, self.width, self.height)
 end
 
 return Player
