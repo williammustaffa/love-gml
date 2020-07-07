@@ -22,14 +22,18 @@ function Room:initialize()
   self.height = 480
 
   self:addViewport('default', {})
+  self:_runCreate()
+end
+
+function Room:_runCreate()
   self:create()
 end
 
 -- Room:update
 -- Update instances accordingly its update method
-function Room:runStep()
-  self:updateViewport()
-  self:updateInstances()
+function Room:_runStep()
+  self:_updateViewport()
+  self:_updateInstances()
 
   -- Call custom method
   self:step()
@@ -37,7 +41,7 @@ end
 
 -- Room:draw
 -- Update instances accordingly its draw method
-function Room:runDraw()
+function Room:_runDraw()
   -- Room drawing
   if self.viewport then
     self.viewport:attach()
@@ -115,9 +119,9 @@ function Room:getViewport()
   return self.viewport
 end
 
--- Room:updateViewport
+-- Room:_updateViewport
 -- Execute update method safely
-function Room:updateViewport()
+function Room:_updateViewport()
   local dt = love.timer.getDelta()
 
   if self.viewport then
@@ -207,21 +211,20 @@ function Room:drawInstances()
   table.map(
     self.instances,
     function(instance) 
-      instance:runDraw()
+      instance:_runDraw()
     end
   )
 end
 
--- Room:updateInstances
+-- Room:_updateInstances
 -- loop though instances and update them
-function Room:updateInstances()
+function Room:_updateInstances()
   -- Room update
   -- Update positions
   table.map(
     self.instances,
     function(instance)
-      instance:runStep()
-      instance:applyVelocities()
+      instance:_runStep()
     end
   )
 
@@ -229,7 +232,7 @@ function Room:updateInstances()
   table.map(
     self.instances,
     function(instance)
-      instance:handleCollision()
+      instance:_handleCollision()
     end
   )
 end

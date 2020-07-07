@@ -3,12 +3,17 @@ class = require 'core.libs.middleclass'
 debugger = require 'core.libs.debugger'
 
 -- Include helpers
+require 'core.modules.keyboard.utils'
 require 'core.modules.graphics.utils'
 require 'core.modules.table.utils'
 require 'core.modules.math.utils'
 require 'core.modules.string.utils'
 require 'core.modules.type.utils'
 
+-- Aliases
+keyboard = love.keyboard
+
+-- App
 App = require(__conf__.entry)
 
 function love.load()
@@ -16,9 +21,9 @@ function love.load()
 end
 
 function love.update()
-  app:runStep()
+  app:_runStep()
 end
 
 function love.draw()
-  app:runDraw()
+  app:_runDraw()
 end

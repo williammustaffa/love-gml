@@ -8,8 +8,6 @@ function Block:create(options)
   self.solid = true
   self.height = 32
   self.width = 32
-  self.bounce = 0
-  self.friction = 0
 end
 
 function Block:step()

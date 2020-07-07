@@ -8,16 +8,16 @@ local SpriteIdle = require 'src.sprites.SpriteIdle'
 local Player = Object:subclass('Player')
 
 function Player:create(options)
-  self.y = 0
-  self.height = 32
-  self.width = 20
-  self.speed = 0
-  self.dynamic = true
+  self.solid = false
   self.gravity = 10
+  self.gravity_direction = 270
 
-  self.sprite = SpriteIdle
-  self.xScale = 0.5
-  self.yScale = 0.5
+  -- Sprites
+  self.sprite_index = SpriteIdle
+  -- self.image_xscale = 0.5
+  -- self.image_yscale = 0.5
+  self.height = self.sprite_index._frame_height
+  self.width = self.sprite_index._frame_width
 
   -- Set this object as viewport target
   self.room:setViewportTarget(self)
@@ -25,26 +25,26 @@ end
 
 function Player:step()
   -- Moving right
-  if love.keyboard.isDown('right') then
+  if keyboard.isDown('right') then
     self.hspeed = 50
-    self.xScale = 0.5
-    self.sprite = SpriteRun
+    -- self.image_xscale = 0.5
+    self.sprite_index = SpriteRun
   end
 
   -- Moving left
-  if love.keyboard.isDown('left') then
+  if keyboard.isDown('left') then
     self.hspeed = -50
-    self.xScale = -0.5
-    self.sprite = SpriteRun
+    -- self.image_xscale = -0.5
+    self.sprite_index = SpriteRun
   end
 
   -- Canceling hspeed
-  if not love.keyboard.isDown('right') and not love.keyboard.isDown('left') then
+  if not keyboard.isDown('right') and not keyboard.isDown('left') then
     self.hspeed = 0
-    self.sprite = SpriteIdle
+    self.sprite_index = SpriteIdle
   end
 
-  if love.keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
+  if keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
     self.vspeed = -250
   end
 end
