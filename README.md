@@ -1,4 +1,6 @@
-## Love App Boilerplate
+## Love GML
+
+This is basically a love2d abstraction based on the game maker architecture and definitions.
 
 ### Running the project
 This project uses Löve2d along with lua language. To prepare your development environment you`ll need to install both.
