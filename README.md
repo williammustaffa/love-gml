@@ -8,10 +8,6 @@ This project uses Löve2d along with lua language. To prepare your development e
 **Lua:** Go to [Lua's website](https://www.lua.org/start.html) and follow the instructions for your OS
 
 ### Structure
-* [libs/](./libs)
-  * [middleclass.lua](./libs/middleclass.lua)
-  * [debugger.lua](./libs/debugger.lua)
-  * [anim8.lua](./libs/anim8.lua)
 * [core/](./core)
   * [entities/](./core/entities)
     * [Game.lua](./core/entities/Game.lua)
@@ -22,6 +18,10 @@ This project uses Löve2d along with lua language. To prepare your development e
     * [Background.lua](./core/entities/Background.lua)
     * [Tileset.lua](./core/entities/Tileset.lua)
     * [Viewport.lua](./core/entities/Viewport.lua)
+  * [libs/](./core/libs)
+     * [middleclass.lua](./core/libs/middleclass.lua)
+     * [debugger.lua](./core/libs/debugger.lua)
+     * [anim8.lua](./core/libs/anim8.lua)
 * [src/](./src)
   * [assets/](./src/assets)
     * [images](./src/assets/images)
