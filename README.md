@@ -41,40 +41,231 @@ This project uses Löve2d along with lua language. To prepare your development e
 
 ### GML Support
 #### Object instance properties
-| Property | Type | Descriptions | Support |
-| --- | --- | --- | --- |
-| id | Integer | Instance id on current room | :x: |
-| solid | Boolean |Add solid behavior on collision | :heavy_check_mark: |
-| visible | Boolean |Run draw event from instance | :x: |
-| persistent | Boolean | Persist instance attributes on current room | :x: |
-| depth | Integer |Instance draw depth | :x: |
-| alarm | Array | Set of event alarms |:x: |
-| object_index | Integer | Index of the instance object | :x: |
-| sprite_index | Sprite Instance | Sprite to be rendered on object instance | :heavy_check_mark: |
-| sprite_width | Float | Current sprite_index width | :x: |
-| sprite_height | Float | Current sprite_index height | :x: |
-| sprite_xoffset | Float | Current sprite_index offset on x axis | :heavy_check_mark: |
-| sprite_yoffset | Float | Current sprite_index offset on y axis | :heavy_check_mark: |
-| image_alpha | Float | Current sprite_index opacity | :x: |
-| image_angle | Float | Current sprite_index angle | :heavy_check_mark: |
-| image_blend | undefined | Current sprite_index blend effect | :x: |
-| image_index | Integer | Current sprite_index frame index | :x: |
-| image_number | Integer | Current sprite_index number of frames | :x: |
-| image_speed | Float | Current sprite_index animation velocity | :x: |
-| image_xscale | Float | Current sprite_index scale on x axis | :heavy_check_mark: |
-| image_yscale | Float | Current sprite_index scale on y axis | :heavy_check_mark: |
-| mask_index | undefined | Current mask of the object instance | :x: |
-| bbox_bottom | undefined | TODO | :x: |
-| bbox_left | undefined | TODO | :x: |
-| bbox_right | undefined | TODO | :x: |
-| bbox_top | undefined | TODO | :x: |
-| direction | Float | Direction of the object applied on speed | :heavy_check_mark: |
-| speed | Float | speed of the object towards direction | :heavy_check_mark: |
-| gravity_direction | Float | Direction of the object applied on gravity | :heavy_check_mark: |
-| gravity | Float | speed of the object towards gravity_direction | :heavy_check_mark: |
-| friction | Float | friction applied to hspeed and vspeed of a instance | :heavy_check_mark: (partial) |
-| hspeed | Float | horizontal speed of the instance | :heavy_check_mark: |
-| vspeed | Float | vertical speed of the instance | :heavy_check_mark: |
+<table>
+   <thead>
+      <tr>
+         <th>Property</th>
+         <th>Type</th>
+         <th>Descriptions</th>
+         <th>Support</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+        <td colspan="4" align="center">
+          <strong>General variables</strong>
+        </td>
+      </tr>
+      <tr>
+         <td>id</td>
+         <td>Integer</td>
+         <td>Instance id on current room</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>solid</td>
+         <td>Boolean</td>
+         <td>Add solid behavior on collision</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>visible</td>
+         <td>Boolean</td>
+         <td>Run draw event from instance</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>persistent</td>
+         <td>Boolean</td>
+         <td>Persist instance attributes on current room</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>depth</td>
+         <td>Integer</td>
+         <td>Instance draw depth</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>alarm</td>
+         <td>Array</td>
+         <td>Set of event alarms</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>object_index</td>
+         <td>Integer</td>
+         <td>Index of the instance object</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center">
+          <strong>Sprite variables</strong>
+        </td>
+      </tr>
+      <tr>
+         <td>sprite_index</td>
+         <td>Sprite Instance</td>
+         <td>Sprite to be rendered on object instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>sprite_width</td>
+         <td>Float</td>
+         <td>Current sprite_index width</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>sprite_height</td>
+         <td>Float</td>
+         <td>Current sprite_index height</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>sprite_xoffset</td>
+         <td>Float</td>
+         <td>Current sprite_index offset on x axis</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>sprite_yoffset</td>
+         <td>Float</td>
+         <td>Current sprite_index offset on y axis</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>image_alpha</td>
+         <td>Float</td>
+         <td>Current sprite_index opacity</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>image_angle</td>
+         <td>Float</td>
+         <td>Current sprite_index angle</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>image_blend</td>
+         <td>undefined</td>
+         <td>Current sprite_index blend effect</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>image_index</td>
+         <td>Integer</td>
+         <td>Current sprite_index frame index</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>image_number</td>
+         <td>Integer</td>
+         <td>Current sprite_index number of frames</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>image_speed</td>
+         <td>Float</td>
+         <td>Current sprite_index animation velocity</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>image_xscale</td>
+         <td>Float</td>
+         <td>Current sprite_index scale on x axis</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>image_yscale</td>
+         <td>Float</td>
+         <td>Current sprite_index scale on y axis</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center">
+          <strong>Mask variables</strong>
+        </td>
+      </tr>
+      <tr>
+         <td>mask_index</td>
+         <td>undefined</td>
+         <td>Current mask of the object instance</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>bbox_bottom</td>
+         <td>undefined</td>
+         <td>TODO</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>bbox_left</td>
+         <td>undefined</td>
+         <td>TODO</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>bbox_right</td>
+         <td>undefined</td>
+         <td>TODO</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+         <td>bbox_top</td>
+         <td>undefined</td>
+         <td>TODO</td>
+         <td>:x:</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center">
+          <strong>Movement variables</strong>
+        </td>
+      </tr>
+      <tr>
+         <td>direction</td>
+         <td>Float</td>
+         <td>Direction of the object applied on speed</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>speed</td>
+         <td>Float</td>
+         <td>speed of the object towards direction</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>gravity_direction</td>
+         <td>Float</td>
+         <td>Direction of the object applied on gravity</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>gravity</td>
+         <td>Float</td>
+         <td>speed of the object towards gravity_direction</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>friction</td>
+         <td>Float</td>
+         <td>friction applied to hspeed and vspeed of a instance</td>
+         <td>:heavy_check_mark: (partial)</td>
+      </tr>
+      <tr>
+         <td>hspeed</td>
+         <td>Float</td>
+         <td>horizontal speed of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>vspeed</td>
+         <td>Float</td>
+         <td>vertical speed of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+   </tbody>
+</table>
+
 
 
 ## Usage
