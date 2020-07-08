@@ -3,12 +3,15 @@
 This is basically a love2d abstraction based on the game maker architecture and definitions.
 
 ### Running the project
-This project uses Löve2d along with lua language. To prepare your development environment you`ll need to install both.
+This project requires only Löve2d, really simple:
 
 **Löve2D:** Go to [Löve2d website](https://love2d.org) and follow the instructions for your OS
-**Lua:** Go to [Lua's website](https://www.lua.org/start.html) and follow the instructions for your OS
 
 ### Game structure
+* [core/](./core)
+  * [entities/](./core/entities)
+  * [libs/](./core/libs)
+  * [modules/](./core/modules)
 * [src/](./src)
   * [assets/](./src/assets)
     * [images](./src/assets/images)
