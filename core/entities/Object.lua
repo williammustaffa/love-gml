@@ -112,8 +112,16 @@ function Object:_run_draw()
   self:draw()
 
   if __conf__.debug == true then
-    love.graphics.rectangle('line', self.x, self.y, self.sprite_height, self.sprite_width)
-    love.graphics.print('id: '..self.id, self.x, self.y)
+    local r, g, b, a = love.graphics.getColor()
+    love.graphics.setColor(255, 0, 0, 1)
+    love.graphics.line(self.x, self.y, self.x, self.y - 16)
+    love.graphics.setColor(0, 255, 0, 1)
+    love.graphics.line(self.x, self.y, self.x + 16, self.y)
+    love.graphics.setColor(0, 0, 255, 1)
+    love.graphics.line(self.x, self.y, self.x, self.y + 16)
+    love.graphics.setColor(255, 255, 0, 1)
+    love.graphics.line(self.x, self.y, self.x - 16, self.y)
+    love.graphics.setColor(r, g, b, a)
   end
 end
 

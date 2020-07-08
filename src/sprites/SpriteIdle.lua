@@ -2,13 +2,15 @@ local Sprite = require 'core.entities.Sprite'
 
 local SpriteIdle = Sprite:subclass('SpriteIdle')
 
-function SpriteIdle:create()
+function SpriteIdle:setup()
   self.source = 'src/assets/images/sprite-idle.png'
   -- self.left = 5
-  self.border = 0.6
-  self.h_frames = 16
-  self.v_frames = 1
-  self.frame_map = { '1-16', 1 }
+  self.frame_width = 58
+  self.frame_height = 64
+  self.frame_xoffset = 26
+  self.frame_yoffset = 32
+  self.frame_border = 0.6
+  self.grid_map = { '1-16', 1 }
 end
 
 return SpriteIdle:new()

@@ -5,41 +5,53 @@ local anim8 = require 'core.libs.anim8'
 local Sprite = class('entity.Sprite')
 
 function Sprite:initialize()
-  self:create()
+  -- Initial variables
+  self.frame_width = 0
+  self.frame_height = 0
+  self.frame_xoffset = 0
+  self.frame_yoffset = 0
+  self.frame_border = 0
 
-  -- Sprite creation
+  -- Call definitions
+  self:setup()
+
+  -- Load image
   self.image = love.graphics.newImage(self.source)
 
-  -- Grid variables
-  self._image_width = self.image:getWidth()
-  self._image_height = self.image:getHeight()
-  self._frame_width = math.floor(self._image_width / self.h_frames)
-  self._frame_height = math.floor(self._image_height / self.v_frames)
-  self.left = self.left or 0
-  self.top = self.top or 0
-  self.border = self.border or 0
+  if typeOf(self.image_height) ~= 'number' then
+    self.image_height = self.image:getHeight()
+  end
+
+  if typeOf(self.image_width) ~= 'number' then
+    self.image_width = self.image:getWidth()
+  end
+
+  if __conf__.debug == true then
+    print("Loaded image ", self.source, self.image_width .. 'x' .. self.image_height)
+  end
 
   -- Create grid
   local grid = anim8.newGrid(
-    self._frame_width,
-    self._frame_height,
-    self._image_width,
-    self._image_height,
-    self.left,
-    self.top,
-    self.border
+    self.frame_width,
+    self.frame_height,
+    self.image_width,
+    self.image_height,
+    0,
+    0,
+    self.frame_border
   )
 
   -- Animation variables
-  self.frames = grid:getFrames(unpack(self.frame_map))
+  self.frames = grid:getFrames(unpack(self.grid_map))
   self.speed = 0.05
   self.onLoop = nil
 
   -- Generate animation from grid
   self.animation = anim8.newAnimation(self.frames, self.speed, self.onLoop)
+
 end
 
-function Sprite:_run_step()
+function Sprite:_run_step(instance)
   local dt = love.timer.getDelta()
   self.animation:update(dt)
 end
@@ -52,8 +64,8 @@ function Sprite:_run_draw(instance)
     instance.image_angle, -- angle
     instance.image_xscale, -- x scale
     instance.image_yscale, -- y scale
-    instance.sprite_xoffset, -- x offset
-    instance.sprite_yoffset -- y offset
+    self.frame_xoffset + instance.sprite_xoffset, -- x offset
+    self.frame_yoffset + instance.sprite_yoffset -- y offset
     -- axis x,
     -- axis y
   )

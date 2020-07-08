@@ -14,8 +14,8 @@ function Player:create(options)
 
   -- Sprites
   self.sprite_index = SpriteIdle
-  -- self.image_xscale = 0.5
-  -- self.image_yscale = 0.5
+  self.image_xscale = 1
+  self.image_yscale = 1
   self.height = 64 -- self.sprite_index._frame_height
   self.width = 32 -- self.sprite_index._frame_width
 
@@ -27,14 +27,14 @@ function Player:step()
   -- Moving right
   if keyboard.isDown('right') then
     self.hspeed = 100
-    -- self.image_xscale = 0.5
+    self.image_xscale = 1
     self.sprite_index = SpriteRun
   end
 
   -- Moving left
   if keyboard.isDown('left') then
     self.hspeed = -100
-    -- self.image_xscale = -0.5
+    self.image_xscale = -1
     self.sprite_index = SpriteRun
   end
 
