@@ -14,19 +14,19 @@ function DemoRoom:create()
 
   -- Place player
   for x=0, love.graphics.getWidth() * 2 / 32 do
-    self:placeObject(Block, x * 32, love.graphics.getHeight() - 32) 
+    self:place_object(Block, x * 32, love.graphics.getHeight() - 32) 
   end
 
   -- Place floor
   for y=0, (love.graphics.getHeight() - 64) / 32 do
     for x=0, love.graphics.getWidth() * 2 / 32 do
       if math.random() > 0.8 then
-        self:placeObject(Block, x * 32, y * 32) 
+        self:place_object(Block, x * 32, y * 32) 
       end
     end
   end
 
-  self:placeObject(Player, 0, 0)
+  self:place_object(Player, 0, 0)
 end
 
 return DemoRoom

@@ -5,11 +5,11 @@ function Sound:initialize()
   -- Sound creation
 end
 
-function Sound:update()
+function Sound:_run_step()
   -- Sound update
 end
 
-function Sound:draw()
+function Sound:_run_draw()
   -- Sound drawing
 end
 

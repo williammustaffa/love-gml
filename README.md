@@ -62,7 +62,7 @@ This project uses Löve2d along with lua language. To prepare your development e
          <td>id</td>
          <td>Integer</td>
          <td>Instance id on current room</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>solid</td>
@@ -74,7 +74,7 @@ This project uses Löve2d along with lua language. To prepare your development e
          <td>visible</td>
          <td>Boolean</td>
          <td>Run draw event from instance</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>persistent</td>
@@ -86,7 +86,7 @@ This project uses Löve2d along with lua language. To prepare your development e
          <td>depth</td>
          <td>Integer</td>
          <td>Instance draw depth</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>alarm</td>

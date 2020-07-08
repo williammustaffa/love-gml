@@ -39,12 +39,12 @@ function Sprite:initialize()
   self.animation = anim8.newAnimation(self.frames, self.speed, self.onLoop)
 end
 
-function Sprite:_runStep()
+function Sprite:_run_step()
   local dt = love.timer.getDelta()
   self.animation:update(dt)
 end
 
-function Sprite:_runDraw(instance)
+function Sprite:_run_draw(instance)
   self.animation:draw(
     self.image, -- love image
     instance.x, -- x position

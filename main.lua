@@ -1,9 +1,7 @@
 -- Global libraries
 class = require 'core.libs.middleclass'
-debugger = require 'core.libs.debugger'
 
 -- Include helpers
-require 'core.modules.keyboard.utils'
 require 'core.modules.graphics.utils'
 require 'core.modules.table.utils'
 require 'core.modules.math.utils'
@@ -21,9 +19,9 @@ function love.load()
 end
 
 function love.update()
-  app:_runStep()
+  app:_run_step()
 end
 
 function love.draw()
-  app:_runDraw()
+  app:_run_draw()
 end

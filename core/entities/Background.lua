@@ -5,11 +5,11 @@ function Background:initialize()
   -- Background creation
 end
 
-function Background:update(dt)
+function Background:_run_step(dt)
   -- Background update
 end
 
-function Background:draw()
+function Background:_run_draw()
   -- Background drawing
 end
 

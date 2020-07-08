@@ -13,38 +13,38 @@ function Game:initialize()
   self.rooms = {}
   self.room = false
 
-  self:_runCreate()
+  self:_run_create()
 end
 
-function Game:_runCreate()
+function Game:_run_create()
   self:create()
 end
 
 -- Game:update:
-function Game:_runStep()
+function Game:_run_step()
   if self.room and self.room:isInstanceOf(Room) then
-    self.room:_runStep()
+    self.room:_run_step()
   end
 end
 
 -- Game:draw:
 -- Call current room draw method
-function Game:_runDraw()
+function Game:_run_draw()
   if self.room and self.room:isInstanceOf(Room) then
-    self.room:_runDraw()
+    self.room:_run_draw()
   end
 
   self:draw()
 end
 
-function Game:addRoom(room)
-  print('[App:addRoom] Added new room: ' .. room.name)
+function Game:add_room(room)
+  print('[App:add_room] Added new room: ' .. room.name)
   self.rooms[room.name] = room:new()
 end
 
--- Game:setRoom:
+-- Game:set_room:
 -- Changes current room based on its name
-function Game:setRoom(roomName)
+function Game:set_room(roomName)
   local nextRoom = self.rooms[roomName]
 
   if self.room then
@@ -52,11 +52,11 @@ function Game:setRoom(roomName)
   end
 
   if nextRoom then
-    print('[Game:setRoom] Running room: ' .. roomName)
+    print('[Game:set_room] Running room: ' .. roomName)
     self.room = nextRoom
     self.room:init()
   else
-    print('[Game:setRoom] Failed running room: ' .. roomName)
+    print('[Game:set_room] Failed running room: ' .. roomName)
     self.room = false
   end
 end

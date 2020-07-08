@@ -16,11 +16,11 @@ function Player:create(options)
   self.sprite_index = SpriteIdle
   -- self.image_xscale = 0.5
   -- self.image_yscale = 0.5
-  self.height = self.sprite_index._frame_height
-  self.width = self.sprite_index._frame_width
+  self.height = 64 -- self.sprite_index._frame_height
+  self.width = 32 -- self.sprite_index._frame_width
 
   -- Set this object as viewport target
-  self.room:setViewportTarget(self)
+  self.room:set_viewport_target(self)
 end
 
 function Player:step()
@@ -44,7 +44,7 @@ function Player:step()
     self.sprite_index = SpriteIdle
   end
 
-  if keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
+  if keyboard.isDown('up') and not self:place_free(self.x, self.y + 1) then
     self.vspeed = -250
   end
 end

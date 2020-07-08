@@ -2,7 +2,7 @@ __conf__ = {}
 
 function love.conf(t)
   t.entry = 'src.App'
-  t.debug = true
+  t.debug = false
 
   t.identity = "GtGLG"
   t.version = "11.2"

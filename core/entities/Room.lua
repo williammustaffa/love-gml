@@ -1,5 +1,6 @@
 -- File: Room.lua
 local Camera = require'core.libs.Camera'
+local Object = require'core.entities.Object'
 
 -- Create class
 local Room = class('entity.Room')
@@ -17,23 +18,23 @@ function Room:initialize()
   self.instances = {}
   self.viewports = {}
   self.viewport = false
-  self.viewportTarget = false
+  self.viewport_target = false
   self.width = 640
   self.height = 480
 
-  self:addViewport('default', {})
-  self:_runCreate()
+  self:add_viewport('default', {})
+  self:_run_create()
 end
 
-function Room:_runCreate()
+function Room:_run_create()
   self:create()
 end
 
 -- Room:update
 -- Update instances accordingly its update method
-function Room:_runStep()
-  self:_updateViewport()
-  self:_updateInstances()
+function Room:_run_step()
+  self:_update_viewport()
+  self:_update_instances()
 
   -- Call custom method
   self:step()
@@ -41,13 +42,13 @@ end
 
 -- Room:draw
 -- Update instances accordingly its draw method
-function Room:_runDraw()
+function Room:_run_draw()
   -- Room drawing
   if self.viewport then
     self.viewport:attach()
 
     -- Draw inside viewport
-    self:drawInstances()
+    self:_draw_instances()
     self:draw()
 
     self.viewport:detach()
@@ -56,7 +57,7 @@ function Room:_runDraw()
     self.viewport:draw()
   else
     -- Fallback
-    self:drawInstances()
+    self:_draw_instances()
   end
 end
 
@@ -64,52 +65,52 @@ end
 -- Start executing the room instances
 function Room:init()
   self:kill() -- Reset room
-  self:setViewport('default') -- Set default viewport
-  self:createInstances() -- create instances
+  self:set_viewport('default') -- Set default viewport
+  self:_create_instances() -- create instances
 end
 
 -- Room:kill
 -- Reset room data
 function Room:kill()
-  self:resetViewport()
-  self:destroyInstances()
+  self:_reset_viewport()
+  self:_destroy_instances()
 end
 
-function Room:getHeight()
+function Room:get_height()
   return math.max(self.height, love.graphics.getHeight())
 end
 
-function Room:getWidth()
+function Room:get_width()
   return math.max(self.width, love.graphics.getWidth())
 end
 
--- Room:addViewport
+-- Room:add_viewport
 -- Add a viewport to the room viewport list
-function Room:addViewport(name, options)
+function Room:add_viewport(name, options)
   if not self.viewports[name] then
     self.viewports[name] = Camera(unpack(options))
   else
-    print('[Room:addViewport] Viewport already added: ', name)
+    print('[Room:add_viewport] Viewport already added: ', name)
   end
 end
 
--- Room:resetViewport
+-- Room:_reset_viewport
 -- Set viewport to its initial state
-function Room:resetViewport()
+function Room:_reset_viewport()
   self.viewport = false
 end
 
--- Room:setViewport
+-- Room:set_viewport
 -- set current app viewport
-function Room:setViewport(name)
+function Room:set_viewport(name)
   local viewport = self.viewports[name]
 
   if viewport then
     self.viewport = viewport
-    print('[Room:addViewport] Viewport set: ' .. name)
+    print('[Room:add_viewport] Viewport set: ' .. name)
   else
-    self:resetViewport()
-    print('[Room:addViewport] Viewport not found: ' .. name)
+    self:_reset_viewport()
+    print('[Room:add_viewport] Viewport not found: ' .. name)
   end
 end
 
@@ -119,21 +120,21 @@ function Room:getViewport()
   return self.viewport
 end
 
--- Room:_updateViewport
+-- Room:_update_viewport
 -- Execute update method safely
-function Room:_updateViewport()
+function Room:_update_viewport()
   local dt = love.timer.getDelta()
 
   if self.viewport then
     self.viewport:update(dt)
 
-    if self.viewportTarget then
+    if self.viewport_target then
         -- Viewport target
-      local xTarget = self.viewportTarget.x
-      local yTarget = self.viewportTarget.y
+      local xTarget = self.viewport_target.x
+      local yTarget = self.viewport_target.y
 
-      local roomWidth = self:getWidth()
-      local roomHeight = self:getHeight()
+      local roomWidth = self:get_width()
+      local roomHeight = self:get_height()
 
       local halfScreenWidth = love.graphics.getWidth() / 2
       local halfScreenHeight = love.graphics.getHeight() / 2
@@ -162,79 +163,80 @@ function Room:_updateViewport()
   end
 end
 
--- Room:placeObject
+-- Room:place_object
 -- Place objects in room for giving coordinates
-function Room:placeObject(class, x, y)
-  local object = { class = class, x = x, y = y }
-
-  table.insert(self.objects, object)
+function Room:place_object(ObjDefinition, x, y)
+  if ObjDefinition and ObjDefinition:isSubclassOf(Object) then
+    table.insert(self.objects, { ObjDefinition, x, y })
+  else
+    print('Object is not instance of Object')
+  end
 end
 
--- Room:setViewportTarget
+-- Room:set_viewport_target
 -- Set instance to be followed by viewport
-function Room:setViewportTarget(instance)
-  self.viewportTarget = instance
+function Room:set_viewport_target(instance)
+  self.viewport_target = instance
 end
 
--- Room:createInstanceFromObject
+-- Room:create_instanceFromObject
 -- Create single instance from object item from objects array
-function Room:createInstance(class, x, y)
-  local instance = class:new({ x = x, y = y, room = self })
-  local id = #self.instances + 1
+function Room:create_instance(ObjDefinition, x, y)
+  if ObjDefinition and ObjDefinition:isSubclassOf(Object) then
+    local ninstances = table.getn(self.instances)
+    local id = ninstances + 1000
 
-  instance.id = id
+    local instance = ObjDefinition:new({
+      id = id,
+      x = x,
+      y = y,
+      room = self
+    })
 
-  self.instances[id] = instance
+    table.insert(self.instances, instance)
+  end
 end
 
--- Room:createInstances
+-- Room:_create_instances
 -- Loop though all objects and instantiate them
-function Room:createInstances()
-  -- Instantiate objects
-  table.map(
-    self.objects,
-    function(object) self:createInstance(object.class, object.x, object.y) end
-  )
+function Room:_create_instances()
+  for index, object in ipairs(self.objects) do
+    self:create_instance(unpack(object))
+  end
 
   print('[Room:createIntances] Creating instances for: ' .. Room.name)
 end
 
 -- Room:destroy instances
 -- Reset instances table
-function Room:destroyInstances()
-  self.instances = {}
+function Room:_destroy_instances()
+  for index in pairs(self.instances) do
+    self.instances[index] = nil
+  end
 end
 
--- Room:drawInstances
+-- Depth sorting method
+function depth_sorter(t, a, b)
+  return t[b].depth < t[a].depth
+end
+
+-- Room:_draw_instances
 -- loop though instances and draw them
-function Room:drawInstances()
-  table.map(
-    self.instances,
-    function(instance) 
-      instance:_runDraw()
-    end
-  )
+function Room:_draw_instances()
+  for index, instance in spairs(self.instances, depth_sorter) do
+    instance:_run_draw()
+  end
 end
 
--- Room:_updateInstances
+-- Room:_update_instances
 -- loop though instances and update them
-function Room:_updateInstances()
-  -- Room update
-  -- Update positions
-  table.map(
-    self.instances,
-    function(instance)
-      instance:_runStep()
-    end
-  )
-
-  -- handle intersected objects
-  table.map(
-    self.instances,
-    function(instance)
-      instance:_handleCollision()
-    end
-  )
+function Room:_update_instances()
+  for index, instance in ipairs(self.instances) do
+    instance:_run_step()
+  end
+  for index, instance in ipairs(self.instances) do
+    instance:_handle_collision()
+  end
 end
 
 return Room
