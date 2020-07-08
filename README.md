@@ -6,24 +6,9 @@ This is basically a love2d abstraction based on the game maker architecture and 
 This project uses Löve2d along with lua language. To prepare your development environment you`ll need to install both.
 
 **Löve2D:** Go to [Löve2d website](https://love2d.org) and follow the instructions for your OS
-
 **Lua:** Go to [Lua's website](https://www.lua.org/start.html) and follow the instructions for your OS
 
-### Structure
-* [core/](./core)
-  * [entities/](./core/entities)
-    * [Game.lua](./core/entities/Game.lua)
-    * [Object.lua](./core/entities/Object.lua)
-    * [Room.lua](./core/entities/Room.lua)
-    * [Sound.lua](./core/entities/Sound.lua)
-    * [Sprite.lua](./core/entities/Sprite.lua)
-    * [Background.lua](./core/entities/Background.lua)
-    * [Tileset.lua](./core/entities/Tileset.lua)
-    * [Viewport.lua](./core/entities/Viewport.lua)
-  * [libs/](./core/libs)
-     * [middleclass.lua](./core/libs/middleclass.lua)
-     * [debugger.lua](./core/libs/debugger.lua)
-     * [anim8.lua](./core/libs/anim8.lua)
+### Game structure
 * [src/](./src)
   * [assets/](./src/assets)
     * [images](./src/assets/images)
@@ -37,7 +22,6 @@ This project uses Löve2d along with lua language. To prepare your development e
 
 ### Libs
 - **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support.
-- **[debugger](https://github.com/slembcke/debugger.lua)**: A simple, embedabble CLI debugger for Lua.
 - **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
 - **[anim8](https://github.com/kikito/anim8)**: Animation library for LÖVE.
 
