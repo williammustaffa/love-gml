@@ -26,14 +26,14 @@ end
 function Player:step()
   -- Moving right
   if keyboard.isDown('right') then
-    self.hspeed = 50
+    self.hspeed = 100
     -- self.image_xscale = 0.5
     self.sprite_index = SpriteRun
   end
 
   -- Moving left
   if keyboard.isDown('left') then
-    self.hspeed = -50
+    self.hspeed = -100
     -- self.image_xscale = -0.5
     self.sprite_index = SpriteRun
   end
@@ -45,7 +45,7 @@ function Player:step()
   end
 
   if keyboard.isDown('up') and not self:place_free(self.x, self.y + 1) then
-    self.vspeed = -250
+    self.vspeed = -350
   end
 end
 

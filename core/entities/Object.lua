@@ -28,7 +28,6 @@ function Object:draw() end
 -- Object:initialize
 -- Object constructor
 function Object:initialize(properties)
-  print('Instance created with id: ' .. properties.id)
   -- General variables
   self.id = properties.id
   self.room = properties.room

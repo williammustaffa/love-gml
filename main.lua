@@ -7,9 +7,8 @@ require 'core.modules.table.utils'
 require 'core.modules.math.utils'
 require 'core.modules.string.utils'
 require 'core.modules.type.utils'
-
--- Aliases
-keyboard = love.keyboard
+require 'core.modules.window.utils'
+require 'core.modules.keyboard.alias'
 
 -- App
 App = require(__conf__.entry)

@@ -6,8 +6,8 @@ local Block = Object:subclass('Block')
 function Block:create(options)
   -- Block creation
   self.solid = true
-  self.height = 32
-  self.width = 32
+  self.height = 64
+  self.width = 64
 end
 
 function Block:step()
