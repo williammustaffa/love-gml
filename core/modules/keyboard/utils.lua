@@ -1,0 +1,1 @@
+require('core.modules.keyboard.alias')

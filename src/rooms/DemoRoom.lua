@@ -1,32 +1,27 @@
--- Room information
--- here we will create the room information
--- place objects, set backgrounds and tilesets
+local DemoRoom = LGML.Room('DemoRoom')
 
--- Important to set the subclass name as it will be used in the room navigation
-local Room = require 'core.entities.Room'
-local Player = require 'src.objects.Player'
-local Block = require 'src.objects.Block'
-
-local DemoRoom = Room:subclass('DemoRoom')
+local Player = require('src.objects.Player')
+local Block = require('src.objects.Block')
 
 function DemoRoom:create()
   self.width = 960
+  self.height = love.graphics.getHeight()
 
   -- Place player
-  for x=0, love.graphics.getWidth() * 2 / 32 do
-    self:placeObject(Block, x * 32, love.graphics.getHeight() - 32) 
+  for x=0, self.width / 64 do
+    self:place_object(Block, x * 64, self.height - 64) 
   end
 
   -- Place floor
-  for y=0, (love.graphics.getHeight() - 64) / 32 do
-    for x=0, love.graphics.getWidth() * 2 / 32 do
+  for y=0, (self.height - 128) / 64 do
+    for x=0, self.width / 64 do
       if math.random() > 0.8 then
-        self:placeObject(Block, x * 32, y * 32) 
+        self:place_object(Block, x * 64, y * 64) 
       end
     end
   end
 
-  self:placeObject(Player, 0, 0)
+  self:place_object(Player, 0, 0)
 end
 
 return DemoRoom

@@ -1,15 +1,15 @@
--- File: Tileset.lua
+local class = require('core.libs.middleclass')
 local Tileset = class('entity.Tileset')
 
 function Tileset:initialize()
   -- Tileset creation
 end
 
-function Tileset:update(dt)
+function Tileset:__step(dt)
   -- Tileset update
 end
 
-function Tileset:draw()
+function Tileset:__draw()
   -- Tileset drawing
 end
 

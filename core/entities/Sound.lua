@@ -1,15 +1,15 @@
--- File: Sound.lua
+local class = require('core.libs.middleclass')
 local Sound = class('entity.Sound')
 
 function Sound:initialize()
   -- Sound creation
 end
 
-function Sound:update()
+function Sound:__step()
   -- Sound update
 end
 
-function Sound:draw()
+function Sound:__draw()
   -- Sound drawing
 end
 

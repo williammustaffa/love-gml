@@ -1,87 +1,166 @@
--- File:Object.lua
+
+local class  = require('core.libs.middleclass')
+local Sprite = require('core.entities.Sprite')
 local Object = class('entity.Object')
 
--- Register custom method
-function Object:create() end
-function Object:step() end
-function Object:draw() end
+-- TODO metjhods
+-- distance_to_object
+-- distance_to_point
+-- motion_add
+-- motion_set
+-- move_towards_point
+-- move_bounce_all
+-- move_bounce_solid
+-- move_contact_all
+-- move_contact_solid
+-- move_outside_all
+-- move_outside_solid
+-- move_random
+-- move_snap
+-- place_snapped
+-- move_wrap
 
 -- Object:initialize
 -- Object constructor
-function Object:initialize(options)
-  self.x = options and options.x or 0
-  self.y = options and options.y or 0
-  self.xOffset = options and options.xOffset or 0
-  self.yOffset = options and options.yOffset or 0
-  self.solid = options and options.solid or false
-  self.speed = options and options.speed or 0
-  self.vspeed = options and options.vspeed or 0
-  self.hspeed = options and options.hspeed or 0
-  self.gravity = options and options.gravity or 0
-  self.gravityDirection = options and options.gravityDirection or 270
-  self.xScale = options and options.xScale or 1
-  self.yScale = options and options.yScale or 1
-  self.direction = options and options.direction or 0
-  self.width = options and options.width or 0
-  self.height = options and options.height or 0
-  self.room = options and options.room or false
-  self.dynamic = options and options.type or false
-  self.bounce = options and options.bounce or 0
-  self.friction = options and options.friction or 0
-  self.color = options and options.color or rgba(255, 255, 255)
-  self.sprite = option and options.sprite or false
+function Object:initialize(properties)
+  -- General variables
+  self.id = properties.id
+  self.room = properties.room
+  self.solid = false
+  self.visible = true
+  self.persistent = true -- TODO
+  self.depth = 0 -- TODO
+  self.alarm = {} -- TODO
+  self.object_index = properties.id
 
-  self:create()
+  -- Sprite variables TODO
+  self.sprite_index = false
+  self.sprite_width = 0
+  self.sprite_height = 0
+  self.sprite_xoffset = 0
+  self.sprite_yoffset = 0
+  self.image_alpha = 1
+  self.image_angle = 0
+  self.image_blend = 0
+  self.image_index = 0
+  self.image_number = 0
+  self.image_speed = 1
+  self.image_xscale = 1
+  self.image_yscale = 1
+
+  -- Mask variables TODO
+  self.mask_index = 0
+  self.bbox_bottom = 0
+  self.bbox_left = 0
+  self.bbox_right = 0
+  self.bbox_top = 0
+
+  -- Built-in movements
+  self.direction = 0
+  self.friction = 0
+  self.bounce = 0
+  self.gravity = 0
+  self.gravity_direction = 0
+  self.hspeed = 0
+  self.vspeed = 0
+  self.speed = 0
+
+  -- Axis movements
+  self.x = properties.x or 0
+  self.y = properties.y or 0
+  self.xprevious = self.x -- TODO
+  self.yprevious = self.y
+  self.xstart = self.x -- TODO
+  self.ystart = self.y
+
+  -- Run create
+  self:__create()
 end
 
+function Object:__create()
+  if type(self.create) == 'function' then
+    self:create()
+  end
+end
 
-function Object:runStep()
-  -- Object update
-  if self.sprite then
-    self.sprite:runStep()
+function Object:__step()
+  if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
+    self.sprite_index:__step()
+
+    self.sprite_width = self.sprite_index.frame_width
+    self.sprite_height = self.sprite_index.frame_height
   end
 
-  self:step()
+  if type(self.step) == 'function' then
+    self:step()
+  end
+
+  self:_apply_velocities()
 end
 
-function Object:runDraw()
-  if __conf__.debug == true then
-    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+function Object:__draw()
+  -- Skip draw event
+  if not self.visible then
+    return nil
+  end
+
+  local r, g, b, a = love.graphics.getColor()
+
+  if self.image_alpha < 1 then
+  love.graphics.setColor(r, g, b, self.image_alpha)
   end
 
   -- Object drawing
-  if self.sprite then
-    self.sprite:runDraw(self)
+  if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
+    self.sprite_index:__draw(self)
   end
 
-  self:draw()
+  if type(self.draw) == 'function' then
+    self:draw()
+  end
+
+  if __conf__.debug == true then
+    love.graphics.setColor(255, 0, 0, 1)
+    love.graphics.line(self.x, self.y, self.x, self.y - 16)
+    love.graphics.setColor(0, 255, 0, 1)
+    love.graphics.line(self.x, self.y, self.x + 16, self.y)
+    love.graphics.setColor(0, 0, 255, 1)
+    love.graphics.line(self.x, self.y, self.x, self.y + 16)
+    love.graphics.setColor(255, 255, 0, 1)
+    love.graphics.line(self.x, self.y, self.x - 16, self.y)
+  end
+
+  love.graphics.setColor(r, g, b, a)
 end
 
-function Object:checkCollision(x1, y1, w1, h1, x2, y2, w2, h2)
+function Object:_check_collision(x1, y1, w1, h1, x2, y2, w2, h2)
   return x1 < x2 + w2 and
          x2 < x1 + w1 and
          y1 < y2 + h2 and
          y2 < y1 + h1
 end
 
-function Object:placeFree(x, y)
+function Object:place_free(x, y)
   local collision = false
 
-  if self.room then
-    local instances = self.room.instances
+  for index, instance in ipairs(self.room.instances) do
+    if instance.solid and instance.id ~=self.id then
+      local has_collision = self:_check_collision(
+        x, y, self.width, self.height,
+        instance.x, instance.y, instance.width, instance.height
+      )
 
-    local findCollision = function(instance)
-      return instance.solid and instance.id ~= self.id and self:checkCollision(x, y, self.width, self.height, instance.x, instance.y, instance.width, instance.height)
+      if has_collision then
+        collision = true
+      end
     end
-
-    collision = table.find(instances, findCollision)
   end
 
-  return not toBoolean(collision)
+  return not collision
 end
 
-function Object:applyGravity()
-  local radians = math.rad(self.gravityDirection)
+function Object:_apply_gravity()
+  local radians = math.rad(self.gravity_direction)
   local vacceleration = self.gravity * math.sin(radians);
   local hacceleration = self.gravity * math.cos(radians);
 
@@ -89,7 +168,7 @@ function Object:applyGravity()
   self.hspeed = self.hspeed + hacceleration
 end
 
-function Object:ApplySpeed()
+function Object:_apply_speed()
   local radians = math.rad(self.direction)
   local vacceleration = self.speed * math.sin(radians);
   local hacceleration = self.speed * math.cos(radians);
@@ -98,27 +177,23 @@ function Object:ApplySpeed()
   self.hspeed = self.hspeed + hacceleration
 end
 
-function Object:handleCollision()
-  if self.room and self.dynamic then
-    local instances = self.room.instances
-
-    local mapCollision = function(instance)
+function Object:_handle_collision()
+  if self.room and self.solid == false then
+    for index, instance in ipairs(self.room.instances) do
       if instance.id == self.id then
         return
       end
 
-      local separationX, separationY = self:calculateSeparators(instance)
+      local separation_x, separation_y = self:_calculate_separators(instance)
 
-      if separationX and separationY then
-        self:resolveCollision(instance, separationX, separationY)
+      if separation_x and separation_y then
+        self:_resolve_collision(instance, separation_x, separation_y)
       end
     end
-
-    table.map(instances, mapCollision)
   end
 end
 
-function Object:calculateSeparators(instance)
+function Object:_calculate_separators(instance)
   -- Calculate enter x and center y
   local sxx = self.x + (self.width / 2)
   local ixx = instance.x + (instance.width / 2)
@@ -129,65 +204,65 @@ function Object:calculateSeparators(instance)
   local distanceX = sxx - ixx
   local distanceY = syy - iyy
 
-  local absDistanceX = math.abs(distanceX)
-  local absDistanceY = math.abs(distanceY)
+  local abs_distance_x = math.abs(distanceX)
+  local abs_distance_y = math.abs(distanceY)
 
   -- sum of the extents
-  local sumHalfWidth = (self.width + instance.width) / 2
-  local sumHalfHeight = (self.height + instance.height) / 2
+  local sum_half_width = (self.width + instance.width) / 2
+  local sum_half_height = (self.height + instance.height) / 2
 
-  if absDistanceX >= sumHalfWidth or absDistanceY >= sumHalfHeight then
+  if abs_distance_x >= sum_half_width or abs_distance_y >= sum_half_height then
     -- no collision
     return
   end
 
   -- shortest separation
-  local separationX = sumHalfWidth - absDistanceX
-  local separationY = sumHalfHeight - absDistanceY
+  local separation_x = sum_half_width - abs_distance_x
+  local separation_y = sum_half_height - abs_distance_y
 
-  if separationX < separationY then
-    if separationX > 0 then
-      separationY = 0
+  if separation_x < separation_y then
+    if separation_x > 0 then
+      separation_y = 0
     end
   else
-    if separationY > 0 then
-      separationX = 0
+    if separation_y > 0 then
+      separation_x = 0
     end
   end
 
   -- correct sign
   if distanceX < 0 then
-    separationX = -separationX
+    separation_x = -separation_x
   end
 
   if distanceY < 0 then
-    separationY = -separationY
+    separation_y = -separation_y
   end
 
-  return separationX, separationY
+  return separation_x, separation_y
 end
 
-function Object:resolveCollision(instance, separationX, separationY)
+function Object:_resolve_collision(instance, separation_x, separation_y)
   -- find the collision normal
-  local delta = math.sqrt(separationX * separationX + separationY * separationY)
+  local delta = math.sqrt(separation_x * separation_x + separation_y * separation_y)
 
-  local normalX = separationX / delta
-  local normalY = separationY / delta
+  local normalX = separation_x / delta
+  local normalY = separation_y / delta
 
   -- relative velocity
   local hspeed = self.hspeed - (instance.hspeed or 0)
   local vspeed = self.vspeed - (instance.vspeed or 0)
 
   -- penetration speed
-  local penetrationSpeed = hspeed * normalX + vspeed * normalY
+  local penetration_speed = hspeed * normalX + vspeed * normalY
 
   -- penetration component
-  local penetrationX = normalX * penetrationSpeed
-  local penetrationY = normalY * penetrationSpeed
+  local penetration_x = normalX * penetration_speed
+  local penetration_y = normalY * penetration_speed
 
   -- tangent component
-  local tangentX = hspeed - penetrationX 
-  local tangentY = vspeed - penetrationY
+  local tangent_x = hspeed - penetration_x 
+  local tangent_y = vspeed - penetration_y
 
   -- restitution
   local restitution = 1 + math.max(self.bounce, instance.bounce or 0)
@@ -196,21 +271,21 @@ function Object:resolveCollision(instance, separationX, separationY)
   local friction = math.min(self.friction, instance.friction or 0)
 
   -- change the velocity of shape a
-  self.hspeed = hspeed - penetrationX * restitution + tangentX * friction
-  self.vspeed = vspeed - penetrationY * restitution + tangentY * friction
+  self.hspeed = hspeed - penetration_x * restitution + tangent_x * friction
+  self.vspeed = vspeed - penetration_y * restitution + tangent_y * friction
 
-  if penetrationSpeed <= 0 then 
-    self.x = self.x + separationX
-    self.y = self.y + separationY
+  if penetration_speed <= 0 then 
+    self.x = self.x + separation_x
+    self.y = self.y + separation_y
   end
 end
 
-function Object:applyVelocities()
+function Object:_apply_velocities()
   local dt = love.timer.getDelta()
 
   -- Apply forces that modify vspeed/hspeed
-  self:applyGravity()
-  self:ApplySpeed()
+  self:_apply_gravity()
+  self:_apply_speed()
 
   self.x = self.x + self.hspeed * dt
   self.y = self.y + self.vspeed * dt

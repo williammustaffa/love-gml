@@ -1,15 +1,10 @@
---Object information
-local Object = require 'core.entities.Object'
-
-local Block = Object:subclass('Block')
+local Block = LGML.Object('Block')
 
 function Block:create(options)
   -- Block creation
   self.solid = true
-  self.height = 32
-  self.width = 32
-  self.bounce = 0
-  self.friction = 0
+  self.height = 64
+  self.width = 64
 end
 
 function Block:step()

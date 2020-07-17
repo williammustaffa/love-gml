@@ -1,51 +1,48 @@
---Object information
-local Object = require 'core.entities.Object'
+local Player = LGML.Object('Player')
+local Player = LGML.Object('Player')
 
--- Sample sprite
-local SpriteRun = require 'src.sprites.SpriteRun'
-local SpriteIdle = require 'src.sprites.SpriteIdle'
-
-local Player = Object:subclass('Player')
+local SpriteRun = require('src.sprites.SpriteRun')
+local SpriteIdle = require('src.sprites.SpriteIdle')
 
 function Player:create(options)
-  self.y = 0
-  self.height = 32
-  self.width = 20
-  self.speed = 0
-  self.dynamic = true
+  self.solid = false
   self.gravity = 10
+  self.gravity_direction = 270
 
-  self.sprite = SpriteIdle
-  self.xScale = 0.5
-  self.yScale = 0.5
+  -- Sprites
+  self.sprite_index = SpriteIdle
+  self.image_xscale = 1
+  self.image_yscale = 1
+  self.height = 64
+  self.width = 64
 
   -- Set this object as viewport target
-  self.room:setViewportTarget(self)
+  self.room:set_viewport_target(self)
 end
 
 function Player:step()
   -- Moving right
-  if love.keyboard.isDown('right') then
-    self.hspeed = 50
-    self.xScale = 0.5
-    self.sprite = SpriteRun
+  if keyboard.isDown('right') then
+    self.hspeed = 100
+    self.image_xscale = 1
+    self.sprite_index = SpriteRun
   end
 
   -- Moving left
-  if love.keyboard.isDown('left') then
-    self.hspeed = -50
-    self.xScale = -0.5
-    self.sprite = SpriteRun
+  if keyboard.isDown('left') then
+    self.hspeed = -100
+    self.image_xscale = -1
+    self.sprite_index = SpriteRun
   end
 
   -- Canceling hspeed
-  if not love.keyboard.isDown('right') and not love.keyboard.isDown('left') then
+  if not keyboard.isDown('right') and not keyboard.isDown('left') then
     self.hspeed = 0
-    self.sprite = SpriteIdle
+    self.sprite_index = SpriteIdle
   end
 
-  if love.keyboard.isDown('up') and not self:placeFree(self.x, self.y + 1) then
-    self.vspeed = -250
+  if keyboard.isDown('up') and not self:place_free(self.x, self.y + 1) then
+    self.vspeed = -350
   end
 end
 
