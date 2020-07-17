@@ -18,6 +18,19 @@ function Player:create(options)
 
   -- Set this object as viewport target
   self.room:set_viewport_target(self)
+
+  -- Set alarm
+  self.alarm[0] = 5
+  self.alarm[1] = 10
+end
+
+function Player:alarm0()
+  print("Alarm 0 triggered and looping")
+  self.alarm[0] = 5
+end
+
+function Player:alarm1()
+  print("Alarm 1 triggered")
 end
 
 function Player:step()

@@ -73,7 +73,7 @@ TODO
          <td>alarm</td>
          <td>Array</td>
          <td>Set of event alarms</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>object_index</td>

@@ -29,8 +29,8 @@ function Object:initialize(properties)
   self.solid = false
   self.visible = true
   self.persistent = true -- TODO
-  self.depth = 0 -- TODO
-  self.alarm = {} -- TODO
+  self.depth = 0 
+  self.alarm = {}
   self.object_index = properties.id
 
   -- Sprite variables TODO
@@ -84,6 +84,21 @@ function Object:__create()
 end
 
 function Object:__step()
+  local dt = love.timer.getDelta()
+  for index, value in pairs(self.alarm) do
+    if value >= 0 then
+      self.alarm[index] = value - dt
+    end
+
+    if value < 0 and value ~= -1 then
+      self.alarm[index] = -1
+
+      if type(self['alarm'..index]) then
+        self['alarm'..index](self)
+      end
+    end
+  end
+
   if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
     self.sprite_index:__step()
 
