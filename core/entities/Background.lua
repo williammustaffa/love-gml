@@ -1,3 +1,5 @@
+local class = require('core.libs.middleclass')
+
 -- File: Background.lua
 local Background = class('entity.Background')
 

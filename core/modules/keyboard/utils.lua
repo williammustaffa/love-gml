@@ -1,1 +1,1 @@
-require 'core.modules.keyboard.alias'
+require('core.modules.keyboard.alias')

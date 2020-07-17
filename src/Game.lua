@@ -1,8 +1,5 @@
 
---Object information
-local Game = require 'core.entities.Game'
-
-local App = Game:subclass('App')
+local App = LGML.Game('App')
 
 -- App:initialize:
 -- Constructor method

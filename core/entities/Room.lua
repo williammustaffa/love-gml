@@ -1,4 +1,4 @@
--- File: Room.lua
+local class  = require('core.libs.middleclass')
 local Camera = require'core.libs.Camera'
 local Object = require'core.entities.Object'
 

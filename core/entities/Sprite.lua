@@ -1,6 +1,6 @@
--- File: Sprite.lua
-local Camera = require 'core.libs.Camera'
-local anim8 = require 'core.libs.anim8'
+local class  = require('core.libs.middleclass')
+local Camera = require('core.libs.Camera')
+local anim8  = require('core.libs.anim8')
 
 local Sprite = class('entity.Sprite')
 
@@ -18,11 +18,11 @@ function Sprite:initialize()
   -- Load image
   self.image = love.graphics.newImage(self.source)
 
-  if typeOf(self.image_height) ~= 'number' then
+  if type(self.image_height) ~= 'number' then
     self.image_height = self.image:getHeight()
   end
 
-  if typeOf(self.image_width) ~= 'number' then
+  if type(self.image_width) ~= 'number' then
     self.image_width = self.image:getWidth()
   end
 

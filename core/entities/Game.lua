@@ -1,6 +1,6 @@
--- Global entities
-local Room = require 'core.entities.Room'
-local Game = class('entities.Game')
+local class = require('core.libs.middleclass')
+local Room  = require('core.entities.Room')
+local Game  = class('entities.Game')
 
 -- Register custom methods
 function Game:create() end 

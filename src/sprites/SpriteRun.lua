@@ -1,6 +1,4 @@
-local Sprite = require 'core.entities.Sprite'
-
-local SpriteRun = Sprite:subclass('SpriteRun')
+local SpriteRun = LGML.Sprite('SpriteRun')
 
 function SpriteRun:setup()
   self.source = 'src/assets/images/sprite-run.png'

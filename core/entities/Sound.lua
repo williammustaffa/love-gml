@@ -1,4 +1,4 @@
--- File: Sound.lua
+local class = require('core.libs.middleclass')
 local Sound = class('entity.Sound')
 
 function Sound:initialize()

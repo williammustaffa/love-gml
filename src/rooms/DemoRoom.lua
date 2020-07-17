@@ -1,13 +1,7 @@
--- Room information
--- here we will create the room information
--- place objects, set backgrounds and tilesets
+local DemoRoom = LGML.Room('DemoRoom')
 
--- Important to set the subclass name as it will be used in the room navigation
-local Room = require 'core.entities.Room'
-local Player = require 'src.objects.Player'
-local Block = require 'src.objects.Block'
-
-local DemoRoom = Room:subclass('DemoRoom')
+local Player = require('src.objects.Player')
+local Block = require('src.objects.Block')
 
 function DemoRoom:create()
   self.width = 960

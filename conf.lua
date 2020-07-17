@@ -1,7 +1,7 @@
 __conf__ = {}
 
 function love.conf(t)
-  t.entry = 'src.App'
+  t.entry = 'src.Game'
   t.debug = true
 
   t.identity = "GtGLG"

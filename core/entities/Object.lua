@@ -1,6 +1,6 @@
-local Sprite = require 'core.entities.Sprite'
 
--- File:Object.lua
+local class  = require('core.libs.middleclass')
+local Sprite = require('core.entities.Sprite')
 local Object = class('entity.Object')
 
 -- Register custom method
@@ -148,7 +148,7 @@ function Object:place_free(x, y)
     end
   end
 
-  return not toBoolean(collision)
+  return not collision
 end
 
 function Object:_apply_gravity()

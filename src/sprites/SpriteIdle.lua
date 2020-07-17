@@ -1,6 +1,4 @@
-local Sprite = require 'core.entities.Sprite'
-
-local SpriteIdle = Sprite:subclass('SpriteIdle')
+local SpriteIdle = LGML.Sprite('SpriteIdle')
 
 function SpriteIdle:setup()
   self.source = 'src/assets/images/sprite-idle.png'

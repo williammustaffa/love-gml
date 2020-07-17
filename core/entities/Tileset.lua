@@ -1,4 +1,4 @@
--- File: Tileset.lua
+local class = require('core.libs.middleclass')
 local Tileset = class('entity.Tileset')
 
 function Tileset:initialize()

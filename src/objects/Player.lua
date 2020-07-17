@@ -1,11 +1,8 @@
---Object information
-local Object = require 'core.entities.Object'
+local Player = LGML.Object('Player')
+local Player = LGML.Object('Player')
 
--- Sample sprite
-local SpriteRun = require 'src.sprites.SpriteRun'
-local SpriteIdle = require 'src.sprites.SpriteIdle'
-
-local Player = Object:subclass('Player')
+local SpriteRun = require('src.sprites.SpriteRun')
+local SpriteIdle = require('src.sprites.SpriteIdle')
 
 function Player:create(options)
   self.solid = false

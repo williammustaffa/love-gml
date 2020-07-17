@@ -1,7 +1,4 @@
---Object information
-local Object = require 'core.entities.Object'
-
-local Block = Object:subclass('Block')
+local Block = LGML.Object('Block')
 
 function Block:create(options)
   -- Block creation
