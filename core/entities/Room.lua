@@ -5,11 +5,6 @@ local Object = require'core.entities.Object'
 -- Create class
 local Room = class('entity.Room')
 
--- Register custom method
-function Room:create() print('room create') end
-function Room:step() end
-function Room:draw() end
-
 -- Room:initialize
 -- Room constructor
 function Room:initialize()
@@ -27,7 +22,9 @@ function Room:initialize()
 end
 
 function Room:__create()
-  self:create()
+  if type(self.create) == 'function' then
+    self:create()
+  end
 end
 
 -- Room:update
@@ -36,8 +33,9 @@ function Room:__step()
   self:_update_viewport()
   self:_update_instances()
 
-  -- Call custom method
-  self:step()
+  if type(self.step) == 'function' then
+    self:step()
+  end
 end
 
 -- Room:draw
@@ -49,7 +47,10 @@ function Room:__draw()
 
     -- Draw inside viewport
     self:_draw_instances()
-    self:draw()
+
+    if type(self.draw) == 'function' then
+      self:draw()
+    end
 
     self.viewport:detach()
 

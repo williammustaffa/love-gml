@@ -2,12 +2,6 @@ local class = require('core.libs.middleclass')
 local Room  = require('core.entities.Room')
 local Game  = class('entities.Game')
 
--- Register custom methods
-function Game:create() end 
-function Game:step() end 
-function Game:draw() end 
-
--- Game:initialize:
 -- Game constructor
 function Game:initialize()
   self.rooms = {}
@@ -17,7 +11,9 @@ function Game:initialize()
 end
 
 function Game:__create()
-  self:create()
+  if type(self.create) == 'function' then
+    self:create()
+  end
 end
 
 -- Game:update:
@@ -33,8 +29,6 @@ function Game:__draw()
   if self.room and self.room:isInstanceOf(Room) then
     self.room:__draw()
   end
-
-  self:draw()
 end
 
 function Game:add_room(room)

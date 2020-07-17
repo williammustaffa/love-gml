@@ -3,11 +3,6 @@ local class  = require('core.libs.middleclass')
 local Sprite = require('core.entities.Sprite')
 local Object = class('entity.Object')
 
--- Register custom method
-function Object:create() end
-function Object:step() end
-function Object:draw() end
-
 -- TODO metjhods
 -- distance_to_object
 -- distance_to_point
@@ -83,7 +78,9 @@ function Object:initialize(properties)
 end
 
 function Object:__create()
-  self:create()
+  if type(self.create) == 'function' then
+    self:create()
+  end
 end
 
 function Object:__step()
@@ -94,7 +91,10 @@ function Object:__step()
     self.sprite_height = self.sprite_index._frame_height
   end
 
-  self:step()
+  if type(self.step) == 'function' then
+    self:step()
+  end
+
   self:_apply_velocities()
 end
 
@@ -109,7 +109,9 @@ function Object:__draw()
     self.sprite_index:__draw(self)
   end
 
-  self:draw()
+  if type(self.draw) == 'function' then
+    self:draw()
+  end
 
   if __conf__.debug == true then
     local r, g, b, a = love.graphics.getColor()

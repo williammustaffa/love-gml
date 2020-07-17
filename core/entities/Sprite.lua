@@ -61,14 +61,14 @@ function Sprite:__draw(instance)
   local yoffset = self.frame_yoffset + instance.sprite_yoffset
 
   self.animation:draw(
-    self.image, -- love image
-    instance.x + xoffset, -- x position
-    instance.y + yoffset, -- y position
-    instance.image_angle, -- angle
+    self.image,            -- love image
+    instance.x + xoffset,  -- x position
+    instance.y + yoffset,  -- y position
+    instance.image_angle,  -- angle
     instance.image_xscale, -- x scale
     instance.image_yscale, -- y scale
-    xoffset, -- x offset
-    yoffset -- y offset
+    xoffset,               -- x offset
+    yoffset                -- y offset
   )
 end
 
