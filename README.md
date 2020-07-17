@@ -8,11 +8,12 @@ Table of contents
 
    * [Love GML](#love-gml)
    * [Table of contents](#table-of-contents)
-   * [Dependencies](#dependencies)
-   * [Third-party libraries](#third-party-libraryes)
+   * [Instalation](#instalation)
+   * [Usage](#usage)
    * [Usage](#usage)
    * [GML support](#gml-support)
-      * [Object instance properties](#object instance properties)
+      * [Object instance properties](#object-instance-properties)
+   * [Third-party libraries](#third-party-libraries)
    * [License](#license)
 
 Instalation
