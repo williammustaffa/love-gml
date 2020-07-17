@@ -85,7 +85,7 @@ This project requires only Löve2d, really simple:
          <td>object_index</td>
          <td>Integer</td>
          <td>Index of the instance object</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
         <td colspan="4" align="center">
@@ -102,13 +102,13 @@ This project requires only Löve2d, really simple:
          <td>sprite_width</td>
          <td>Float</td>
          <td>Current sprite_index width</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>sprite_height</td>
          <td>Float</td>
          <td>Current sprite_index height</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>sprite_xoffset</td>
@@ -126,7 +126,7 @@ This project requires only Löve2d, really simple:
          <td>image_alpha</td>
          <td>Float</td>
          <td>Current sprite_index opacity</td>
-         <td>:x:</td>
+         <td>:heavy_check_mark:</td>
       </tr>
       <tr>
          <td>image_angle</td>

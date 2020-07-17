@@ -13,8 +13,8 @@ function Player:create(options)
   self.sprite_index = SpriteIdle
   self.image_xscale = 1
   self.image_yscale = 1
-  self.height = 64 -- self.sprite_index._frame_height
-  self.width = 64 -- self.sprite_index._frame_width
+  self.height = 64
+  self.width = 64
 
   -- Set this object as viewport target
   self.room:set_viewport_target(self)

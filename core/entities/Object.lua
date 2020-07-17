@@ -27,11 +27,11 @@ function Object:initialize(properties)
   self.id = properties.id
   self.room = properties.room
   self.solid = false
-  self.visible = true -- TODO
+  self.visible = true
   self.persistent = true -- TODO
   self.depth = 0 -- TODO
   self.alarm = {} -- TODO
-  self.object_index = 0 -- TODO
+  self.object_index = properties.id
 
   -- Sprite variables TODO
   self.sprite_index = false
@@ -39,7 +39,7 @@ function Object:initialize(properties)
   self.sprite_height = 0
   self.sprite_xoffset = 0
   self.sprite_yoffset = 0
-  self.image_alpha = 0
+  self.image_alpha = 1
   self.image_angle = 0
   self.image_blend = 0
   self.image_index = 0
@@ -87,8 +87,8 @@ function Object:__step()
   if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
     self.sprite_index:__step()
 
-    self.sprite_width = self.sprite_index._frame_width
-    self.sprite_height = self.sprite_index._frame_height
+    self.sprite_width = self.sprite_index.frame_width
+    self.sprite_height = self.sprite_index.frame_height
   end
 
   if type(self.step) == 'function' then
@@ -104,6 +104,12 @@ function Object:__draw()
     return nil
   end
 
+  local r, g, b, a = love.graphics.getColor()
+
+  if self.image_alpha < 1 then
+  love.graphics.setColor(r, g, b, self.image_alpha)
+  end
+
   -- Object drawing
   if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
     self.sprite_index:__draw(self)
@@ -114,7 +120,6 @@ function Object:__draw()
   end
 
   if __conf__.debug == true then
-    local r, g, b, a = love.graphics.getColor()
     love.graphics.setColor(255, 0, 0, 1)
     love.graphics.line(self.x, self.y, self.x, self.y - 16)
     love.graphics.setColor(0, 255, 0, 1)
@@ -123,8 +128,9 @@ function Object:__draw()
     love.graphics.line(self.x, self.y, self.x, self.y + 16)
     love.graphics.setColor(255, 255, 0, 1)
     love.graphics.line(self.x, self.y, self.x - 16, self.y)
-    love.graphics.setColor(r, g, b, a)
   end
+
+  love.graphics.setColor(r, g, b, a)
 end
 
 function Object:_check_collision(x1, y1, w1, h1, x2, y2, w2, h2)
