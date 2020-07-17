@@ -1,35 +1,34 @@
-## Love GML
+Love GML
+========
 
 This is basically a love2d abstraction based on the game maker architecture and definitions.
 
-### Running the project
-This project requires only Löve2d, really simple:
+Table of contents
+=================
+
+   * [Love GML](#love-gml)
+   * [Table of contents](#table-of-contents)
+   * [Dependencies](#dependencies)
+   * [Third-party libraries](#third-party-libraryes)
+   * [Usage](#usage)
+   * [GML support](#gml-support)
+      * [Object instance properties](#object instance properties)
+   * [License](#license)
+
+Instalation
+===========
+This project requires only Löve2d to run locally:
 
 **Löve2D:** Go to [Löve2d website](https://love2d.org) and follow the instructions for your OS
 
-### Game structure
-* [core/](./core)
-  * [entities/](./core/entities)
-  * [libs/](./core/libs)
-  * [modules/](./core/modules)
-* [src/](./src)
-  * [assets/](./src/assets)
-    * [images](./src/assets/images)
-    * [sounds](./src/assets/sounds)
-  * [objects/](./src/objects)
-  * [rooms/](./src/rooms)
-  * [App.lua](./src/App.lua)
-* [main.lua](./main.lua)
-* [conf.lua](./conf.lua)
-* [README.md](./README.md)
+Usage
+=====
+TODO
 
-### Libs
-- **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support.
-- **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
-- **[anim8](https://github.com/kikito/anim8)**: Animation library for LÖVE.
-
-### GML Support
-#### Object instance properties
+GML support
+=================
+Object instance properties
+--------------------------
 <table>
    <thead>
       <tr>
@@ -255,7 +254,20 @@ This project requires only Löve2d, really simple:
    </tbody>
 </table>
 
+Third-party libraries
+=====================
+- **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support.
+- **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
+- **[anim8](https://github.com/kikito/anim8)**: Animation library for LÖVE.
 
+License
+=======
+The MIT License (MIT)
 
-## Usage
-TODO
+Copyright (c) 2020 William Lima
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
