@@ -1,10 +1,8 @@
-Love GML
-========
+# Love GML
 
 This is basically a love2d abstraction based on the game maker architecture and definitions.
 
-Table of contents
-=================
+## Table of contents
 
    * [Love GML](#love-gml)
    * [Table of contents](#table-of-contents)
@@ -16,20 +14,16 @@ Table of contents
    * [Third-party libraries](#third-party-libraries)
    * [License](#license)
 
-Instalation
-===========
+## Instalation
 This project requires only Löve2d to run locally:
 
 **Löve2D:** Go to [Löve2d website](https://love2d.org) and follow the instructions for your OS
 
-Usage
-=====
+## Usage
 TODO
 
-GML support
-=================
-Object instance properties
---------------------------
+## GML support
+### Object instance properties
 <table>
    <thead>
       <tr>
@@ -255,14 +249,12 @@ Object instance properties
    </tbody>
 </table>
 
-Third-party libraries
-=====================
+## Third-party libraries
 - **[middleclass](https://github.com/kikito/middleclass)**: Object-orientation for Lua with class support.
 - **[STALKER-X](https://github.com/adnzzzzZ/STALKER-X)**: Camera module for LÖVE
 - **[anim8](https://github.com/kikito/anim8)**: Animation library for LÖVE.
 
-License
-=======
+## License
 The MIT License (MIT)
 
 Copyright (c) 2020 William Lima
