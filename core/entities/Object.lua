@@ -68,9 +68,9 @@ function Object:initialize(properties)
   -- Axis movements
   self.x = properties.x or 0
   self.y = properties.y or 0
-  self.xprevious = self.x -- TODO
+  self.xprevious = self.x
   self.yprevious = self.y
-  self.xstart = self.x -- TODO
+  self.xstart = self.x
   self.ystart = self.y
 
   -- Run create
@@ -96,6 +96,10 @@ function Object:__step()
   end
 
   self:_apply_velocities()
+
+  -- update x previous and y previous
+  self.xprevious = self.x
+  self.yprevious = self.y
 end
 
 function Object:__draw()

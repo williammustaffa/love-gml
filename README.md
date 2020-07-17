@@ -83,6 +83,47 @@ TODO
       </tr>
       <tr>
         <td colspan="4" align="center">
+          <strong>X and Y</strong>
+        </td>
+      </tr>
+      <tr>
+         <td>x</td>
+         <td>Float</td>
+         <td>the x position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>y</td>
+         <td>Float</td>
+         <td>the y position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>xprevious</td>
+         <td>Float</td>
+         <td>previous x position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>yprevious</td>
+         <td>Float</td>
+         <td>previous y position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>xstart</td>
+         <td>Float</td>
+         <td>initial x position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+         <td>ystart</td>
+         <td>Float</td>
+         <td>initial y position of the instance</td>
+         <td>:heavy_check_mark:</td>
+      </tr>
+      <tr>
+        <td colspan="4" align="center">
           <strong>Sprite variables</strong>
         </td>
       </tr>
