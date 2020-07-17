@@ -5,11 +5,11 @@ function Tileset:initialize()
   -- Tileset creation
 end
 
-function Tileset:_run_step(dt)
+function Tileset:__step(dt)
   -- Tileset update
 end
 
-function Tileset:_run_draw()
+function Tileset:__draw()
   -- Tileset drawing
 end
 

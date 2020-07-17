@@ -23,16 +23,16 @@ function Room:initialize()
   self.height = 480
 
   self:add_viewport('default', {})
-  self:_run_create()
+  self:__create()
 end
 
-function Room:_run_create()
+function Room:__create()
   self:create()
 end
 
 -- Room:update
 -- Update instances accordingly its update method
-function Room:_run_step()
+function Room:__step()
   self:_update_viewport()
   self:_update_instances()
 
@@ -42,7 +42,7 @@ end
 
 -- Room:draw
 -- Update instances accordingly its draw method
-function Room:_run_draw()
+function Room:__draw()
   -- Room drawing
   if self.viewport then
     self.viewport:attach()
@@ -224,7 +224,7 @@ end
 -- loop though instances and draw them
 function Room:_draw_instances()
   for index, instance in spairs(self.instances, depth_sorter) do
-    instance:_run_draw()
+    instance:__draw()
   end
 end
 
@@ -232,7 +232,7 @@ end
 -- loop though instances and update them
 function Room:_update_instances()
   for index, instance in ipairs(self.instances) do
-    instance:_run_step()
+    instance:__step()
   end
   for index, instance in ipairs(self.instances) do
     instance:_handle_collision()

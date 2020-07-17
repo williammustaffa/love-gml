@@ -18,9 +18,9 @@ function love.load()
 end
 
 function love.update()
-  app:_run_step()
+  app:__step()
 end
 
 function love.draw()
-  app:_run_draw()
+  app:__draw()
 end

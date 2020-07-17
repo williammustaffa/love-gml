@@ -17,7 +17,7 @@ function Player:create(options)
   self.image_xscale = 1
   self.image_yscale = 1
   self.height = 64 -- self.sprite_index._frame_height
-  self.width = 32 -- self.sprite_index._frame_width
+  self.width = 64 -- self.sprite_index._frame_width
 
   -- Set this object as viewport target
   self.room:set_viewport_target(self)

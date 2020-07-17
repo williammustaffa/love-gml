@@ -13,25 +13,25 @@ function Game:initialize()
   self.rooms = {}
   self.room = false
 
-  self:_run_create()
+  self:__create()
 end
 
-function Game:_run_create()
+function Game:__create()
   self:create()
 end
 
 -- Game:update:
-function Game:_run_step()
+function Game:__step()
   if self.room and self.room:isInstanceOf(Room) then
-    self.room:_run_step()
+    self.room:__step()
   end
 end
 
 -- Game:draw:
 -- Call current room draw method
-function Game:_run_draw()
+function Game:__draw()
   if self.room and self.room:isInstanceOf(Room) then
-    self.room:_run_draw()
+    self.room:__draw()
   end
 
   self:draw()

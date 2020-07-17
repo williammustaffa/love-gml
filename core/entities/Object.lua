@@ -79,16 +79,16 @@ function Object:initialize(properties)
   self.ystart = self.y
 
   -- Run create
-  self:_run_create()
+  self:__create()
 end
 
-function Object:_run_create()
+function Object:__create()
   self:create()
 end
 
-function Object:_run_step()
+function Object:__step()
   if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
-    self.sprite_index:_run_step()
+    self.sprite_index:__step()
 
     self.sprite_width = self.sprite_index._frame_width
     self.sprite_height = self.sprite_index._frame_height
@@ -98,7 +98,7 @@ function Object:_run_step()
   self:_apply_velocities()
 end
 
-function Object:_run_draw()
+function Object:__draw()
   -- Skip draw event
   if not self.visible then
     return nil
@@ -106,7 +106,7 @@ function Object:_run_draw()
 
   -- Object drawing
   if self.sprite_index and self.sprite_index:isInstanceOf(Sprite) then
-    self.sprite_index:_run_draw(self)
+    self.sprite_index:__draw(self)
   end
 
   self:draw()

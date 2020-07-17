@@ -51,23 +51,24 @@ function Sprite:initialize()
 
 end
 
-function Sprite:_run_step(instance)
+function Sprite:__step(instance)
   local dt = love.timer.getDelta()
   self.animation:update(dt)
 end
 
-function Sprite:_run_draw(instance)
+function Sprite:__draw(instance)
+  local xoffset = self.frame_xoffset + instance.sprite_xoffset
+  local yoffset = self.frame_yoffset + instance.sprite_yoffset
+
   self.animation:draw(
     self.image, -- love image
-    instance.x, -- x position
-    instance.y, -- y position
+    instance.x + xoffset, -- x position
+    instance.y + yoffset, -- y position
     instance.image_angle, -- angle
     instance.image_xscale, -- x scale
     instance.image_yscale, -- y scale
-    self.frame_xoffset + instance.sprite_xoffset, -- x offset
-    self.frame_yoffset + instance.sprite_yoffset -- y offset
-    -- axis x,
-    -- axis y
+    xoffset, -- x offset
+    yoffset -- y offset
   )
 end
 
