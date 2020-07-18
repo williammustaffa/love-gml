@@ -138,7 +138,7 @@ function Object:__draw()
     self:draw()
   end
 
-  if __conf__.debug == true then
+  if LGML.__debug == true then
     love.graphics.setColor(255, 0, 0, 1)
     love.graphics.line(self.x, self.y, self.x, self.y - 16)
     love.graphics.setColor(0, 255, 0, 1)

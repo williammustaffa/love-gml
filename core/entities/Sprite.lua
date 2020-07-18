@@ -26,7 +26,7 @@ function Sprite:initialize()
     self.image_width = self.image:getWidth()
   end
 
-  if __conf__.debug == true then
+  if LGML.__debug == true then
     print("Loaded image ", self.source, self.image_width .. 'x' .. self.image_height)
   end
 
