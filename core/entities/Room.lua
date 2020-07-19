@@ -30,8 +30,8 @@ end
 -- Room:update
 -- Update instances accordingly its update method
 function Room:__step()
-  self:_update_viewport()
-  self:_update_instances()
+  self:__update_viewport()
+  self:__update_instances()
 
   if type(self.step) == 'function' then
     self:step()
@@ -46,7 +46,7 @@ function Room:__draw()
     self.viewport:attach()
 
     -- Draw inside viewport
-    self:_draw_instances()
+    self:__draw_instances()
 
     if type(self.draw) == 'function' then
       self:draw()
@@ -58,7 +58,7 @@ function Room:__draw()
     self.viewport:draw()
   else
     -- Fallback
-    self:_draw_instances()
+    self:__draw_instances()
   end
 end
 
@@ -67,14 +67,14 @@ end
 function Room:init()
   self:kill() -- Reset room
   self:set_viewport('default') -- Set default viewport
-  self:_create_instances() -- create instances
+  self:__create_instances() -- create instances
 end
 
 -- Room:kill
 -- Reset room data
 function Room:kill()
-  self:_reset_viewport()
-  self:_destroy_instances()
+  self:__reset_viewport()
+  self:__destroy_instances()
 end
 
 function Room:get_height()
@@ -95,9 +95,9 @@ function Room:add_viewport(name, options)
   end
 end
 
--- Room:_reset_viewport
+-- Room:__reset_viewport
 -- Set viewport to its initial state
-function Room:_reset_viewport()
+function Room:__reset_viewport()
   self.viewport = false
 end
 
@@ -110,7 +110,7 @@ function Room:set_viewport(name)
     self.viewport = viewport
     print('[Room:add_viewport] Viewport set: ' .. name)
   else
-    self:_reset_viewport()
+    self:__reset_viewport()
     print('[Room:add_viewport] Viewport not found: ' .. name)
   end
 end
@@ -121,9 +121,9 @@ function Room:getViewport()
   return self.viewport
 end
 
--- Room:_update_viewport
+-- Room:__update_viewport
 -- Execute update method safely
-function Room:_update_viewport()
+function Room:__update_viewport()
   local dt = love.timer.getDelta()
 
   if self.viewport then
@@ -198,9 +198,9 @@ function Room:create_instance(ObjDefinition, x, y)
   end
 end
 
--- Room:_create_instances
+-- Room:__create_instances
 -- Loop though all objects and instantiate them
-function Room:_create_instances()
+function Room:__create_instances()
   for index, object in ipairs(self.objects) do
     self:create_instance(unpack(object))
   end
@@ -210,7 +210,7 @@ end
 
 -- Room:destroy instances
 -- Reset instances table
-function Room:_destroy_instances()
+function Room:__destroy_instances()
   for index in pairs(self.instances) do
     self.instances[index] = nil
   end
@@ -221,22 +221,22 @@ function depth_sorter(t, a, b)
   return t[b].depth < t[a].depth
 end
 
--- Room:_draw_instances
+-- Room:__draw_instances
 -- loop though instances and draw them
-function Room:_draw_instances()
+function Room:__draw_instances()
   for index, instance in spairs(self.instances, depth_sorter) do
     instance:__draw()
   end
 end
 
--- Room:_update_instances
+-- Room:__update_instances
 -- loop though instances and update them
-function Room:_update_instances()
+function Room:__update_instances()
   for index, instance in ipairs(self.instances) do
     instance:__step()
   end
   for index, instance in ipairs(self.instances) do
-    instance:_handle_collision()
+    instance:__handle_collision()
   end
 end
 

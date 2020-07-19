@@ -110,7 +110,7 @@ function Object:__step()
     self:step()
   end
 
-  self:_apply_velocities()
+  self:__apply_velocities()
 
   -- update x previous and y previous
   self.xprevious = self.x
@@ -141,10 +141,13 @@ function Object:__draw()
   if LGML.__debug == true then
     love.graphics.setColor(255, 0, 0, 1)
     love.graphics.line(self.x, self.y, self.x, self.y - 16)
+
     love.graphics.setColor(0, 255, 0, 1)
     love.graphics.line(self.x, self.y, self.x + 16, self.y)
+
     love.graphics.setColor(0, 0, 255, 1)
     love.graphics.line(self.x, self.y, self.x, self.y + 16)
+
     love.graphics.setColor(255, 255, 0, 1)
     love.graphics.line(self.x, self.y, self.x - 16, self.y)
   end
@@ -152,7 +155,7 @@ function Object:__draw()
   love.graphics.setColor(r, g, b, a)
 end
 
-function Object:_check_collision(x1, y1, w1, h1, x2, y2, w2, h2)
+function Object:__check_collision(x1, y1, w1, h1, x2, y2, w2, h2)
   return x1 < x2 + w2 and
          x2 < x1 + w1 and
          y1 < y2 + h2 and
@@ -164,7 +167,7 @@ function Object:place_free(x, y)
 
   for index, instance in ipairs(self.room.instances) do
     if instance.solid and instance.id ~=self.id then
-      local has_collision = self:_check_collision(
+      local has_collision = self:__check_collision(
         x, y, self.width, self.height,
         instance.x, instance.y, instance.width, instance.height
       )
@@ -178,7 +181,7 @@ function Object:place_free(x, y)
   return not collision
 end
 
-function Object:_apply_gravity()
+function Object:__apply_gravity()
   local radians = math.rad(self.gravity_direction)
   local vacceleration = self.gravity * math.sin(radians);
   local hacceleration = self.gravity * math.cos(radians);
@@ -187,7 +190,7 @@ function Object:_apply_gravity()
   self.hspeed = self.hspeed + hacceleration
 end
 
-function Object:_apply_speed()
+function Object:__apply_speed()
   local radians = math.rad(self.direction)
   local vacceleration = self.speed * math.sin(radians);
   local hacceleration = self.speed * math.cos(radians);
@@ -196,23 +199,23 @@ function Object:_apply_speed()
   self.hspeed = self.hspeed + hacceleration
 end
 
-function Object:_handle_collision()
+function Object:__handle_collision()
   if self.room and self.solid == false then
     for index, instance in ipairs(self.room.instances) do
       if instance.id == self.id then
         return
       end
 
-      local separation_x, separation_y = self:_calculate_separators(instance)
+      local separation_x, separation_y = self:__calculate_separators(instance)
 
       if separation_x and separation_y then
-        self:_resolve_collision(instance, separation_x, separation_y)
+        self:__resolve_collision(instance, separation_x, separation_y)
       end
     end
   end
 end
 
-function Object:_calculate_separators(instance)
+function Object:__calculate_separators(instance)
   -- Calculate enter x and center y
   local sxx = self.x + (self.width / 2)
   local ixx = instance.x + (instance.width / 2)
@@ -261,7 +264,7 @@ function Object:_calculate_separators(instance)
   return separation_x, separation_y
 end
 
-function Object:_resolve_collision(instance, separation_x, separation_y)
+function Object:__resolve_collision(instance, separation_x, separation_y)
   -- find the collision normal
   local delta = math.sqrt(separation_x * separation_x + separation_y * separation_y)
 
@@ -299,12 +302,12 @@ function Object:_resolve_collision(instance, separation_x, separation_y)
   end
 end
 
-function Object:_apply_velocities()
+function Object:__apply_velocities()
   local dt = love.timer.getDelta()
 
   -- Apply forces that modify vspeed/hspeed
-  self:_apply_gravity()
-  self:_apply_speed()
+  self:__apply_gravity()
+  self:__apply_speed()
 
   self.x = self.x + self.hspeed * dt
   self.y = self.y + self.vspeed * dt
