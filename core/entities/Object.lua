@@ -85,6 +85,7 @@ end
 
 function Object:__step()
   local dt = love.timer.getDelta()
+
   for index, value in pairs(self.alarm) do
     if value >= 0 then
       self.alarm[index] = value - dt
@@ -107,7 +108,7 @@ function Object:__step()
   end
 
   if type(self.step) == 'function' then
-    self:step()
+    self:step(dt)
   end
 
   self:__apply_velocities()
@@ -126,7 +127,7 @@ function Object:__draw()
   local r, g, b, a = love.graphics.getColor()
 
   if self.image_alpha < 1 then
-  love.graphics.setColor(r, g, b, self.image_alpha)
+    love.graphics.setColor(r, g, b, self.image_alpha)
   end
 
   -- Object drawing
@@ -135,7 +136,8 @@ function Object:__draw()
   end
 
   if type(self.draw) == 'function' then
-    self:draw()
+    local dt = love.timer.getDelta()
+    self:draw(dt)
   end
 
   if LGML.__debug == true then

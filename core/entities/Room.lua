@@ -18,12 +18,10 @@ function Room:initialize()
   self.height = 480
 
   self:add_viewport('default', {})
-  self:__create()
-end
 
-function Room:__create()
-  if type(self.create) == 'function' then
-    self:create()
+  -- Execute setup
+  if type(self.setup) == 'function' then
+    self:setup()
   end
 end
 

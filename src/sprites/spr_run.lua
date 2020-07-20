@@ -1,6 +1,6 @@
-local SpriteRun = LGML.Sprite('SpriteRun')
+local spr_run = LGML.Sprite('spr_run')
 
-function SpriteRun:setup()
+function spr_run:setup()
   self.source = 'src/assets/images/sprite-run.png'
   self.frame_width = 60
   self.frame_height = 64
@@ -9,4 +9,4 @@ function SpriteRun:setup()
   self.grid_map = { '1-20', 1 }
 end
 
-return SpriteRun:new()
+return spr_run:new()

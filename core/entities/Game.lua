@@ -7,12 +7,9 @@ function Game:initialize()
   self.rooms = {}
   self.room = false
 
-  self:__create()
-end
-
-function Game:__create()
-  if type(self.create) == 'function' then
-    self:create()
+  -- Execute setup
+  if type(self.setup) == 'function' then
+    self:setup()
   end
 end
 
@@ -34,6 +31,11 @@ end
 function Game:add_room(room)
   print('[App:add_room] Added new room: ' .. room.name)
   self.rooms[room.name] = room:new()
+
+  -- Set initial room
+  if not self.room then
+    self:set_room(room.name)
+  end
 end
 
 -- Game:set_room:

@@ -1,6 +1,6 @@
-local SpriteIdle = LGML.Sprite('SpriteIdle')
+local spr_idle = LGML.Sprite('spr_idle')
 
-function SpriteIdle:setup()
+function spr_idle:setup()
   self.source = 'src/assets/images/sprite-idle.png'
   -- self.left = 5
   self.frame_width = 58
@@ -11,4 +11,5 @@ function SpriteIdle:setup()
   self.grid_map = { '1-16', 1 }
 end
 
-return SpriteIdle:new()
+-- TODO: rething sprite logic
+return spr_idle:new()

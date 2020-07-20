@@ -1,11 +1,10 @@
 
-local App = LGML.Game('App')
+local room_0 = require('src.rooms.room_0')
 
--- App:initialize:
--- Constructor method
-function App:create(options)
-  self:add_room(require('src.rooms.DemoRoom'))
-  self:set_room('DemoRoom')
+local game = LGML.Game('game')
+
+function game:setup()
+  self:add_room(room_0)
 end
 
-return App
+return game

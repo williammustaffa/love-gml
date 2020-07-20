@@ -12,8 +12,10 @@ function Sprite:initialize()
   self.frame_yoffset = 0
   self.frame_border = 0
 
-  -- Call definitions
-  self:setup()
+  -- Execute setup
+  if self.setup then
+    self:setup()
+  end
 
   -- Load image
   self.image = love.graphics.newImage(self.source)
